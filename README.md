@@ -9,7 +9,7 @@
 - **Tamara Micaela Camino - TamaraCamino**
 - **Gino Ricciardulli - GinoRicci**
 
-## Pasos para correr la aplicación. (crear bd, variables de entorno, etc). 
+## Pasos para correr la aplicación(crear bd, variables de entorno, etc). 
 
 
 
