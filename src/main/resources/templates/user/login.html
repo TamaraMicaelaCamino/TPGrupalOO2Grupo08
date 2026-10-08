@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/modern-business.css}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+</head>
+<body class="bg-light">
+
+<div class="login-container">
+    <div class="card login-card">
+        <div class="card-body">
+            <div class="login-header">
+                <h3>UNLA GRUPO 8 </h3>
+                <p class="text-muted">Inicie sesion para continuar</p>
+            </div>
+
+            <div th:if="${error != null}" class="alert alert-danger">
+                Usuario o contraseña invalidos.
+            </div>
+
+            <div th:if="${logout != null}" class="alert alert-success">
+                Sesion finalizada correctamente.
+            </div>
+
+            <form th:action="@{/loginprocess}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="username" name="username" required autofocus placeholder="Ingrese su usuario"/>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-control" id="password" name="password" required placeholder="Ingrese su contraseña"/>
+                        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye" id="iconoPassword"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        var input = document.getElementById('password');
+        var icono = document.getElementById('iconoPassword');
+        var estabaVisible = input.type === 'text';
+
+        input.type = estabaVisible ? 'password' : 'text';
+        icono.className = estabaVisible ? 'bi bi-eye' : 'bi bi-eye-slash';
+    });
+</script>
+</body>
+</html>

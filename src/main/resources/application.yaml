@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: tpgrupalhito2grupo08
+
+  # Conexión a la base de datos
+  # NO modificar este archivo: cada integrante define sus propias variables de entorno.
+  # En IntelliJ: run -> edit configurations -> Tpgrupalhito2grupo08Application -> Modify options -> Environment variables -> y agregar estas 3 variables:
+  # Name: DB_URL       Value: jdbc:mysql://localhost:3306/epicentro_gourmet?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+  # Name: DB_USER      Value: root
+  # Name: DB_PASSWORD  Value: tu_clave
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  thymeleaf:
+    cache: false
+
+
