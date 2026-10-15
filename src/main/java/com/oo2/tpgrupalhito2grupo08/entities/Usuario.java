@@ -1,33 +1,30 @@
 package com.oo2.tpgrupalhito2grupo08.entities;
-
 import java.time.LocalDateTime;
-
-import com.oo2.tpgrupalhito2grupo08.entities.enums.UsuarioRol;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-    @Column(name="username", unique=true, nullable=false, length=45)
+    @Column(name="username", nullable=false, unique = true, length = 100)
     private String username;
 
     @Column(name="password", nullable=false, length=60)
     private String password;
 
-    private boolean habilitado;
+    private boolean habilitado=true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -35,9 +32,9 @@ public class Usuario {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UsuarioRol userRol;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name="id_rol")
+    private Rol rol;
 
 
 }
