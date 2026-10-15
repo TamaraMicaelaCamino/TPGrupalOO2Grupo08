@@ -17,4 +17,12 @@ public class FoodTruck extends UnidadDeVenta{
     @Column(nullable = false)
     private boolean requiereElectricidad;
 
+    public FoodTruck(String nombre, double superficieOcupada, String codigo, Festival festival, Usuario responsable, String patente, boolean requiereElectricidad) {
+        super(nombre, superficieOcupada, codigo, festival, responsable);
+        this.patente = patente;
+        this.requiereElectricidad = requiereElectricidad;
+    }
+
+
+
 }

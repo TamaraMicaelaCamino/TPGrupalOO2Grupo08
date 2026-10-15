@@ -42,4 +42,15 @@ public abstract class UnidadDeVenta {
     protected Set<Personal> personal=new HashSet<>();
 
 
+    protected UnidadDeVenta(String nombre, double superficieOcupada, String codigo, Festival festival, Usuario responsable) {
+        this.nombre = nombre;
+        this.superficieOcupada = superficieOcupada;
+        this.codigo = codigo;
+        this.festival = festival;
+        this.responsable = responsable;
+    }
+
+
+
+
 }

@@ -20,4 +20,15 @@ public class PuestoDesarmable extends UnidadDeVenta{
     @Column(nullable = false)
     private int tiempoDeMontaje;
 
+
+    public PuestoDesarmable(String nombre, double superficieOcupada, String codigo, Festival festival, Usuario responsable, int cantCarpas, int tiempoDeMontaje) {
+        super(nombre, superficieOcupada, codigo, festival, responsable);
+        this.cantCarpas = cantCarpas;
+        this.tiempoDeMontaje = tiempoDeMontaje;
+    }
+
+
+
+
+
 }
