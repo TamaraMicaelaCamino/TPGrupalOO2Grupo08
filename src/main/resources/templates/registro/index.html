@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Registrar unidad de venta</h1>
+        <p>Completá los datos de tu unidad y el responsable</p>
+    </div>
+
+    <div id="registro" class="mx-auto" th:attr="data-tipo=${tipo}">
+
+        <!-- FOOD TRUCK -->
+        <form id="form-foodtruck" th:action="@{/registro/foodtruck}" th:object="${foodTruck}" method="post">
+            <div th:replace="~{registro/campos :: erroresGlobales}"></div>
+
+            <div class="row">
+                <div th:replace="~{registro/campos :: selectorTipo}"></div>
+                <div class="col-md-6">
+                    <h4>Datos del food truck</h4>
+                    <div class="form-group">
+                        <label>Patente</label>
+                        <input type="text" class="form-control" th:field="*{patente}">
+                        <small class="text-danger" th:if="${#fields.hasErrors('patente')}" th:errors="*{patente}"></small>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" th:field="*{requiereElectricidad}">
+                        <label class="form-check-label">Requiere conexión eléctrica</label>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="~{registro/campos :: filaInferior}"></div>
+        </form>
+
+        <!-- PUESTO DESARMABLE -->
+        <form id="form-puesto" th:action="@{/registro/puesto}" th:object="${puesto}" method="post">
+            <div th:replace="~{registro/campos :: erroresGlobales}"></div>
+
+            <div class="row">
+                <div th:replace="~{registro/campos :: selectorTipo}"></div>
+                <div class="col-md-6">
+                    <h4>Datos del puesto desarmable</h4>
+                    <div class="form-group">
+                        <label>Cantidad de carpas</label>
+                        <input type="number" class="form-control" th:field="*{cantCarpas}">
+                        <small class="text-danger" th:if="${#fields.hasErrors('cantCarpas')}" th:errors="*{cantCarpas}"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Tiempo de montaje en minutos</label>
+                        <input type="number" class="form-control" th:field="*{tiempoDeMontaje}">
+                        <small class="text-danger" th:if="${#fields.hasErrors('tiempoDeMontaje')}" th:errors="*{tiempoDeMontaje}"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="~{registro/campos :: filaInferior}"></div>
+        </form>
+
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+<script th:src="@{/js/registro.js}"></script>
+</body>
+</html>

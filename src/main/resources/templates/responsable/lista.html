@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+  <div class="page-banner">
+    <h1>Empleados</h1>
+    <p>Personal activo de tu unidad de venta</p>
+  </div>
+
+  <div class="alert alert-success" role="alert" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+  <div class="mb-3">
+    <a class="btn btn-dark" th:href="@{/responsable/empleados/nuevo}">Agregar empleado</a>
+  </div>
+
+  <div class="alert alert-light border" th:if="${#lists.isEmpty(empleados)}">
+    Todavía no tenés empleados activos.
+  </div>
+
+  <div class="table-responsive" th:unless="${#lists.isEmpty(empleados)}">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>DNI</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Ingreso</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="e : ${empleados}">
+        <td class="font-weight-bold" th:text="${e.nombre}"></td>
+        <td th:text="${e.apellido}"></td>
+        <td th:text="${e.dni}"></td>
+        <td th:text="${e.email}"></td>
+        <td th:text="${e instanceof T(com.oo2.tpgrupalhito2grupo08.entities.Cajero)} ? 'Cajero' : 'Cocina'"></td>
+        <td th:text="${#temporals.format(e.fechaIngreso, 'dd/MM/yyyy')}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
