@@ -44,7 +44,7 @@ public class PersonalCocina extends Personal{
         );
 
         this.vencimientoCarnetDeManipulacion =
-                verificarCarnet(vencimientoCarnetDeManipulacion, unidadDeVenta.getFestival.getFechaFin);
+                verificarCarnet(vencimientoCarnetDeManipulacion, unidadDeVenta.getFestival().getFechaFin());
         this.categoria = categoria;
     }
 

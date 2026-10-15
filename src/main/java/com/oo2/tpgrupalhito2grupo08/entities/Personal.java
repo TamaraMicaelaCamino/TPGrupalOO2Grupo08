@@ -45,7 +45,7 @@ public abstract class Personal {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-            name = "idUusuario",
+            name = "usuario_id",
             nullable = false,
             unique = true
     )
@@ -57,7 +57,7 @@ public abstract class Personal {
           optional = false
        )
     @JoinColumn(
-           name = "idUnidadDeVenta",
+           name = "unidadDeVenta_id",
            nullable = false
        )
     @ToString.Exclude

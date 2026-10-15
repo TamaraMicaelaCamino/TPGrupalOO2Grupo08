@@ -37,7 +37,7 @@ public class Festival {
             cascade = CascadeType.ALL
     )
     @JoinColumn(
-            name="idFestival",
+            name="festival_id",
             nullable = false
     )
     @ToString.Exclude
