@@ -1,6 +1,5 @@
 package com.oo2.tpgrupalhito2grupo08.configuration;
-
-import com.oo2.tpgrupalhito2grupo08.services.implementation.UserService;
+import com.oo2.tpgrupalhito2grupo08.services.implementation.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,27 +13,25 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-   private final UserService userService;
+    private final UsuarioService usuarioService;
 
-    public SecurityConfiguration(UserService userService) {
-       this.userService = userService;
+    public SecurityConfiguration(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
-   @Bean
-   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-       return http
-               .csrf(AbstractHttpConfigurer::disable)
-               .cors(AbstractHttpConfigurer::disable)
-               .authorizeHttpRequests(auth -> {
-                   auth.requestMatchers("/", "/error", "/css/**", "/imgs/**", "/js/**", "/vendor/**", "/api/v1/**").permitAll();
-                   auth.anyRequest().permitAll(); //TEMPORAL:Es para ver tus propias vistas sin tener que iniciar sesion cada rato. Al terminar de crear tus vistas y que funcionen completamente le agregas: .authenticated() y @PreAuthorize en el controller, según el rol que corresponda.
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/", "/error", "/css/**", "/imgs/**", "/js/**", "/vendor/**", "/api/v1/**").permitAll();
+                    auth.anyRequest().permitAll(); //TEMPORAL:Es para ver tus propias vistas sin tener que iniciar sesion cada rato. Al terminar de crear tus vistas y que funcionen completamente le agregas: .authenticated() y @PreAuthorize en el controller, según el rol que corresponda.
                 })
                 .formLogin(login -> {
                     login.loginPage("/login");
@@ -58,16 +55,15 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userService);
-        provider.setPasswordEncoder(passwordEncoder());
+    AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(usuarioService);
+        provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 
+
     @Bean
-    PasswordEncoder passwordEncoder(){
-       return new BCryptPasswordEncoder();
+    static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
-
-

@@ -37,7 +37,7 @@
   <div class="form-group">
     <label>Festival</label>
     <select class="form-control" th:field="*{idFestival}">
-      <option value="">Elegí un festival</option>
+      <option value="">Selecciona un festival</option>
       <option th:each="f : ${festivales}" th:value="${f.idFestival}" th:text="${f.nombre}"></option>
     </select>
     <small class="text-danger" th:if="${#fields.hasErrors('idFestival')}" th:errors="*{idFestival}"></small>
@@ -49,12 +49,13 @@
   </div>
   <div class="form-group">
     <label>Superficie en m²</label>
-    <input type="number" step="0.01" class="form-control" th:field="*{superficieOcupada}">
+    <input type="number" step="0.01" min="0.01" class="form-control" th:field="*{superficieOcupada}">
     <small class="text-danger" th:if="${#fields.hasErrors('superficieOcupada')}" th:errors="*{superficieOcupada}"></small>
   </div>
   <div class="form-group">
-    <label>Código (10 caracteres)</label>
+    <label>Código</label>
     <input type="text" class="form-control" maxlength="10" th:field="*{codigo}">
+    <small class="form-text text-muted">10 caracteres: letras (mayúsculas o minúsculas) y un solo número.</small>
     <small class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></small>
   </div>
 </div>

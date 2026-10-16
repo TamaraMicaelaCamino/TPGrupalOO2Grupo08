@@ -11,7 +11,7 @@
         <p>Completá los datos de tu unidad y el responsable</p>
     </div>
 
-    <div id="registro" class="mx-auto" th:attr="data-tipo=${tipo}">
+        <div id="registro" class="mx-auto" th:attr="data-tipo=${tipo}">
 
         <!-- FOOD TRUCK -->
         <form id="form-foodtruck" th:action="@{/registro/foodtruck}" th:object="${foodTruck}" method="post">
@@ -23,7 +23,8 @@
                     <h4>Datos del food truck</h4>
                     <div class="form-group">
                         <label>Patente</label>
-                        <input type="text" class="form-control" th:field="*{patente}">
+                        <input type="text" class="form-control" maxlength="7" th:field="*{patente}">
+                        <small class="form-text text-muted">Formato: 2 letras, 3 números y 2 letras.</small>
                         <small class="text-danger" th:if="${#fields.hasErrors('patente')}" th:errors="*{patente}"></small>
                     </div>
                     <div class="form-check mb-3">
@@ -46,12 +47,12 @@
                     <h4>Datos del puesto desarmable</h4>
                     <div class="form-group">
                         <label>Cantidad de carpas</label>
-                        <input type="number" class="form-control" th:field="*{cantCarpas}">
+                        <input type="number" min="1" step="1" class="form-control" th:field="*{cantCarpas}">
                         <small class="text-danger" th:if="${#fields.hasErrors('cantCarpas')}" th:errors="*{cantCarpas}"></small>
                     </div>
                     <div class="form-group">
                         <label>Tiempo de montaje en minutos</label>
-                        <input type="number" class="form-control" th:field="*{tiempoDeMontaje}">
+                        <input type="number" min="1" step="1" class="form-control" th:field="*{tiempoDeMontaje}">
                         <small class="text-danger" th:if="${#fields.hasErrors('tiempoDeMontaje')}" th:errors="*{tiempoDeMontaje}"></small>
                     </div>
                 </div>
