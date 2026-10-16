@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+  <div class="page-banner">
+    <h1>Epicentro Gourmet</h1>
+    <p>Consultá los festivales del predio, registrá tu unidad de venta o ingresá con tu usuario.</p>
+  </div>
+
+  <div class="alert alert-success" role="alert" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+  <div class="row mb-5">
+    <div class="col-md-6 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Ya tengo usuario</h5>
+          <p class="card-text text-muted">Administradores, responsables y empleados.</p>
+          <a class="btn btn-outline-dark" th:href="@{/login}">Iniciar sesión</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Quiero participar</h5>
+          <p class="card-text text-muted">Registrá tu unidad de venta y tu usuario de responsable.</p>
+          <a class="btn btn-outline-dark" th:href="@{/registro}">Registrar unidad de venta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="mb-3">Festivales cargados</h2>
+
+  <div class="alert alert-light border" th:if="${#lists.isEmpty(festivales)}">
+    Todavía no hay festivales cargados.
+  </div>
+
+  <div class="table-responsive" th:unless="${#lists.isEmpty(festivales)}">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Temporada</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="f : ${festivales}">
+        <td class="font-weight-bold" th:text="${f.nombre}"></td>
+        <td th:text="${f.temporada}"></td>
+        <td th:text="${#temporals.format(f.fechaInicio, 'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(f.fechaFin, 'dd/MM/yyyy')}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
