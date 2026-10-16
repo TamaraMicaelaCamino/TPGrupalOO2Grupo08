@@ -32,16 +32,16 @@ public class Festival {
     @Column(name="fechaFin", nullable = false)
     private LocalDate fechaFin;
 
-    @OneToMany(
+    @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
     @JoinColumn(
-            name="festival_id",
+            name="costo_id",
             nullable = false
     )
     @ToString.Exclude
-    private Set<Costo> costos = new HashSet<>();
+    private Costo costo;
 
     @OneToMany(
             mappedBy = "festival",
@@ -51,9 +51,10 @@ public class Festival {
     @ToString.Exclude
     private Set<UnidadDeVenta> unidades = new HashSet<>();
 
-    public Festival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin){
+    public Festival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin, Costo costo){
         this.nombre=nombre;
         this.temporada=temporada;
+        this.costo=costo;
         esFechaValida(fechaInicio,fechaFin);
     }
 

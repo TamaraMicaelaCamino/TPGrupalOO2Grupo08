@@ -1,6 +1,7 @@
 package com.oo2.tpgrupalhito2grupo08.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 @Entity
@@ -12,12 +13,6 @@ public class Costo {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idCosto;
 
-    @Column(name = "nombreCosto", nullable = false, length = 45)
-    private String nombreCosto;
-
-    @Column(name="montoCosto", nullable = false)
-    private double montoCosto;
-  /*
     @Column(name="costoSuperficie")
     private double costoSuperficie;
 
@@ -41,8 +36,5 @@ public class Costo {
 
     @Column(name="plusAntiguedad")
     private double plusAntiguedad;
-*/
-
-
 
 }
