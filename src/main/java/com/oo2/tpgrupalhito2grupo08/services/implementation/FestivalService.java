@@ -40,4 +40,14 @@ public class FestivalService implements IFestivalService {
         return modelMapper.map(festival, FestivalDTO.class);
     }
 
+    @Override
+    public Festival buscarFestival(Long idFestival) {
+        return festivalRepository.findById(idFestival)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "El festival no existe, id: " + idFestival));
+    }
+
+
+
+
 }

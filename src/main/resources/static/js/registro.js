@@ -2,7 +2,7 @@
     var selectores = document.querySelectorAll('.selector-tipo');
     var foodTruck = document.getElementById('form-foodtruck');
     var puesto = document.getElementById('form-puesto');
-    var inicial = document.getElementById('registro').dataset.tipo || 'foodtruck';
+ var inicial = document.getElementById('registro').dataset.tipo || 'foodtruck';
 
     function mostrar(tipo) {
         foodTruck.style.display = tipo === 'foodtruck' ? 'block' : 'none';

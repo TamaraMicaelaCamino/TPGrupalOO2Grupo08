@@ -1,9 +1,6 @@
 package com.oo2.tpgrupalhito2grupo08.dtos;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +23,8 @@ public class UnidadDeVentaDTO {
     private double superficieOcupada;
 
     @NotBlank(message = "El codigo es obligatorio")
-    @Size(min = 10, max = 10, message = "El código debe tener 10 caracteres")
+    @Pattern(regexp = "^(?=[A-Za-z]*\\d[A-Za-z]*$)[A-Za-z0-9]{10}$",
+            message = "El código debe tener 10 caracteres: 9 letras y un solo número (ej: AbcDefGhi4)")
     private String codigo;
 
     @Valid

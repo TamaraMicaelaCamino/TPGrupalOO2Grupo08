@@ -17,4 +17,9 @@ public class FoodTruckDTO extends UnidadDeVentaDTO{
 
     private boolean requiereElectricidad;
 
+    public void setPatente(String patente) {
+        this.patente = patente == null ? null : patente.trim().toUpperCase();
+    }
+
+
 }
