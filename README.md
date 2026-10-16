@@ -16,3 +16,4 @@
 <img width="2528" height="1922" alt="diagrama" src="https://github.com/user-attachments/assets/2d95f2be-d27b-4c90-bd26-5dc237286722" />
 
 ## Casos de uso implementados y responsables: 
+| Registro de Unidad de Venta | Tamara Camino | [PR #11](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/11) |
