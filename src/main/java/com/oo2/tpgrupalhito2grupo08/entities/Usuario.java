@@ -1,7 +1,6 @@
 package com.oo2.tpgrupalhito2grupo08.entities;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import lombok.Getter;
@@ -35,6 +34,5 @@ public class Usuario {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name="id_rol")
     private Rol rol;
-
 
 }

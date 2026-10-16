@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor @AllArgsConstructor
 public class PersonalDTO {
 
+    private Long dni;
+
     private String nombre;
 
     private String apellido;
@@ -22,4 +24,6 @@ public class PersonalDTO {
     private LocalDate fechaNacimiento;
 
     private String tipoPersonal;
+
+    private boolean activo;
 }

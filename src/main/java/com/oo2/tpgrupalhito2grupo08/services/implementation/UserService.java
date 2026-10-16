@@ -2,8 +2,8 @@ package com.oo2.tpgrupalhito2grupo08.services.implementation;
 
 import java.util.List;
 
+import com.oo2.tpgrupalhito2grupo08.entities.Rol;
 import com.oo2.tpgrupalhito2grupo08.entities.Usuario;
-import com.oo2.tpgrupalhito2grupo08.entities.enums.UsuarioRol;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -12,14 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.oo2.tpgrupalhito2grupo08.repositories.IUserRepository;
+import com.oo2.tpgrupalhito2grupo08.repositories.IUsuarioRepository;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
 
-    private IUserRepository userRepository;
+    private final IUsuarioRepository userRepository;
 
-    public UserService(IUserRepository userRepository) {
+    public UserService(IUsuarioRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
-        return buildUser(user, buildGrantedAuthorities(user.getUserRol()));
+        return buildUser(user, buildGrantedAuthorities(user.getRol()));
     }
 
     private User buildUser(Usuario user, List<GrantedAuthority> grantedAuthorities) {
@@ -36,9 +36,8 @@ public class UserService implements UserDetailsService {
                 grantedAuthorities);
     }
 
-
-    private List<GrantedAuthority> buildGrantedAuthorities(UsuarioRol rol) {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
+    private List<GrantedAuthority> buildGrantedAuthorities(Rol rol) {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.getTipo()));
     }
 
 

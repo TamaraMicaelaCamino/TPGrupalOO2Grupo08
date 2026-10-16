@@ -4,6 +4,7 @@ import com.oo2.tpgrupalhito2grupo08.dtos.FestivalDTO;
 import com.oo2.tpgrupalhito2grupo08.entities.Festival;
 import com.oo2.tpgrupalhito2grupo08.repositories.IFestivalRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IFestivalService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,17 +13,19 @@ import java.util.List;
 @Service
 public class FestivalService implements IFestivalService {
 
+    private final ModelMapper modelMapper;
     private final IFestivalRepository festivalRepository;
 
-    public FestivalService(IFestivalRepository festivalRepository){
+    public FestivalService(IFestivalRepository festivalRepository, ModelMapper modelMapper){
         this.festivalRepository=festivalRepository;
+        this.modelMapper=modelMapper;
     }
 
     @Override
     public List<FestivalDTO> traerTodos() {
         List<FestivalDTO> festivalDTOS = new ArrayList<>();
         for (Festival festival : festivalRepository.findAll()){
-            FestivalDTO dto = mapeoFestival(festival);
+            FestivalDTO dto = modelMapper.map(festival, FestivalDTO.class);
             festivalDTOS.add(dto);
         }
         return festivalDTOS;
@@ -34,17 +37,7 @@ public class FestivalService implements IFestivalService {
                 .findById(idFestival)
                 .orElseThrow(()
                         -> new IllegalArgumentException("ERROR, ID INEXISTENTE"+ idFestival));
-        return mapeoFestival(festival);
-    }
-
-    private FestivalDTO mapeoFestival(Festival festival){
-        FestivalDTO dto = new FestivalDTO(
-                festival.getNombre(),
-                festival.getTemporada(),
-                festival.getFechaInicio(),
-                festival.getFechaFin()
-        );
-        return dto;
+        return modelMapper.map(festival, FestivalDTO.class);
     }
 
 }

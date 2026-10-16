@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="personalCocina")
 @Setter @Getter @ToString(callSuper = true)
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
 public class PersonalCocina extends Personal{
 
     @Setter(AccessLevel.NONE)
@@ -49,7 +49,7 @@ public class PersonalCocina extends Personal{
     }
 
     private  LocalDate verificarCarnet(LocalDate vencimientoCarnetDeManipulacion, LocalDate fechaFinFestival){
-        if(vencimientoCarnetDeManipulacion == null || fechaIngreso == null){
+        if(vencimientoCarnetDeManipulacion == null || fechaFinFestival == null){
             throw new IllegalArgumentException("ERROR, LAS FECHAS DEBEN SER VALIDAS");
         }
         if(vencimientoCarnetDeManipulacion.isBefore(fechaFinFestival)){

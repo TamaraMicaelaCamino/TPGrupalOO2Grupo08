@@ -61,7 +61,7 @@ public class Festival {
         if (fechaInicio == null || fechaFin == null) {
             throw new IllegalArgumentException("error, las fechas son obligatorias");
         }
-        if(fechaInicio.isBefore(fechaFin)){
+        if(!fechaInicio.isBefore(fechaFin)){
              throw new IllegalArgumentException("error, la fecha de fin no debe ser antes que la fecha de inicio");
          }
          this.fechaInicio=fechaInicio;

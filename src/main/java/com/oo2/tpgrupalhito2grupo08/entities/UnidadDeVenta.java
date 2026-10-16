@@ -31,7 +31,7 @@ public abstract class UnidadDeVenta {
     @JoinColumn(nullable = false, name= "festival_id")
     protected Festival festival;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "responsable_id", nullable = false)
     protected Usuario responsable;
 

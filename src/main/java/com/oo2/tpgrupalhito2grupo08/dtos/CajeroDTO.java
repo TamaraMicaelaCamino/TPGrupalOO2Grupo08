@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CajeroDTO extends PersonalDTO {
 
-    private TurnoEnum turnoEnum;
+    private TurnoEnum turno;
 }
