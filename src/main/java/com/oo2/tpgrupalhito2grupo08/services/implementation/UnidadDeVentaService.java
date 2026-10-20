@@ -1,18 +1,17 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
+import com.oo2.tpgrupalhito2grupo08.dtos.*;
+import com.oo2.tpgrupalhito2grupo08.entities.*;
 import com.oo2.tpgrupalhito2grupo08.services.IFestivalService;
+import com.oo2.tpgrupalhito2grupo08.services.IPedidoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.oo2.tpgrupalhito2grupo08.dtos.FoodTruckDTO;
-import com.oo2.tpgrupalhito2grupo08.dtos.PuestoDesarmableDTO;
-import com.oo2.tpgrupalhito2grupo08.entities.Festival;
-import com.oo2.tpgrupalhito2grupo08.entities.FoodTruck;
-import com.oo2.tpgrupalhito2grupo08.entities.PuestoDesarmable;
-import com.oo2.tpgrupalhito2grupo08.entities.Usuario;
 import com.oo2.tpgrupalhito2grupo08.entities.enums.RolEnum;
 import com.oo2.tpgrupalhito2grupo08.repositories.IUnidadDeVentaRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
 import com.oo2.tpgrupalhito2grupo08.services.IUsuarioService;
+
+import java.util.*;
 
 @Service("unidadDeVentaService")
 public class UnidadDeVentaService implements IUnidadDeVentaService {
@@ -21,14 +20,17 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
     private final IFestivalService festivalService;
     private final IUsuarioService usuarioService;
     private final ModelMapper modelMapper;
+    private final IPedidoService pedidoService;
+    private IllegalArgumentException illegalArgumentException;
 
     public UnidadDeVentaService(IUnidadDeVentaRepository unidadRepository,
                                 IFestivalService festivalService,
-                                IUsuarioService usuarioService,
+                                IUsuarioService usuarioService,IPedidoService pedidosService,
                                 ModelMapper modelMapper) {
         this.unidadRepository = unidadRepository;
         this.festivalService = festivalService;
         this.usuarioService = usuarioService;
+        this.pedidoService=pedidosService;
         this.modelMapper = modelMapper;
     }
 
@@ -66,7 +68,7 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
     // validaciones
 
     private void validarCodigo(String codigo) {
-        if (unidadRepository.existsByCodigo(codigo)) {
+        if (unidadRepository.existsByCodigoIgnoreCase(codigo)) {
             throw new IllegalArgumentException("Ese codigo ya esta en uso");
         }
     }
@@ -76,5 +78,29 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
             throw new IllegalArgumentException("Esa patente ya esta registrada");
         }
     }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UnidadDeVentaDTO> traerPorFestival(Long idFestival) {
+        List<UnidadDeVentaDTO> resultado = new ArrayList<>();
+
+        for (UnidadDeVenta u : unidadRepository.buscarPorFestival(idFestival)) {
+            UnidadDeVentaDTO dto;
+            if (u instanceof FoodTruck) {
+                dto = modelMapper.map(u, FoodTruckDTO.class);
+            } else {
+                dto = modelMapper.map(u, PuestoDesarmableDTO.class);
+            }
+
+            //se copia a mano
+            dto.getUsuario().setUsername(u.getResponsable().getUsername());
+
+            resultado.add(dto);
+        }
+        return resultado;
+    }
+
+
 }
 
