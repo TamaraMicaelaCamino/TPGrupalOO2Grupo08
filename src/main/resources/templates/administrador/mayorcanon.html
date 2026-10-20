@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+  <div class="page-banner">
+    <h1>Unidades de Venta con Mayor Canon</h1>
+    <p>Las x unidades con mayor gasto en canon del festival seleccionado</p>
+  </div>
+
+  <div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-dark text-white" th:href="@{/admin}">Volver al panel</a>
+  </div>
+
+  <!-- Selector de festival y cantidad -->
+  <form method="get" th:action="@{/admin/mayorcanon}" class="mb-4">
+    <div class="form-row align-items-end">
+      <div class="col-auto">
+        <label for="idFestival" class="text-muted mb-1">Festival</label>
+        <select id="idFestival" name="idFestival" class="form-control" required>
+          <option value="">Seleccioná un festival</option>
+          <option th:each="f, it : ${festivales}"
+                  th:value="${f.idFestival}"
+                  th:text="${f.nombre}"
+                  th:attr="data-max=${cantidades[it.index]}"
+                  th:selected="${f.idFestival == idFestival}"></option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <label for="x" class="text-muted mb-1">Cantidad de unidades (x)</label>
+        <input type="number" id="x" name="x" min="1" class="form-control"
+               style="width: 120px;" th:value="${x}" required>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-dark">Consultar</button>
+      </div>
+    </div>
+    <small id="avisoMax" class="text-muted"></small>
+  </form>
+
+  <!-- Resultado -->
+  <div class="mb-5" th:if="${idFestival != null}">
+
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(reporte)}">
+      Este festival no tiene unidades de venta
+    </div>
+
+    <div class="table-responsive" th:unless="${#lists.isEmpty(reporte)}">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre comercial</th>
+          <th>Código</th>
+          <th>Tipo de unidad</th>
+          <th class="text-right">Canon</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${reporte}">
+          <td class="font-weight-bold text-dark" th:text="${r.nombreComercial}"></td>
+          <td th:text="${r.codigo}"></td>
+          <td th:text="${r.tipoDeUnidad}"></td>
+          <td class="text-right"
+              th:text="'$ ' + ${#numbers.formatDecimal(r.canon, 1, 'POINT', 0, 'COMMA')}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+<script th:src="@{/js/mayorcanon.js}"></script>
+
+</body>
+</html>
+
+

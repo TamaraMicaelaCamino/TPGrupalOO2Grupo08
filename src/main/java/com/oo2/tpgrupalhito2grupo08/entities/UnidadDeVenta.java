@@ -51,6 +51,6 @@ public abstract class UnidadDeVenta {
     }
 
 
-
+    public abstract double calcularCanon(Costo costo);
 
 }

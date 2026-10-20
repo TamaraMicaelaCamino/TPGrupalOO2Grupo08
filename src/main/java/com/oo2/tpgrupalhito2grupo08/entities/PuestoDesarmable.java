@@ -28,7 +28,11 @@ public class PuestoDesarmable extends UnidadDeVenta{
     }
 
 
-
+    @Override
+    public double calcularCanon(Costo costo) {
+        return superficieOcupada * costo.getCostoSuperficie()
+                - tiempoDeMontaje * costo.getCostoMontaje();
+    }
 
 
 }
