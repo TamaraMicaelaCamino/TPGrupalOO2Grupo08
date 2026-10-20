@@ -102,5 +102,32 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
     }
 
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RankingUnidadDTO> rankingDeUnidades(Long idFestival) {
+        List<UnidadDeVenta> unidades = unidadRepository.buscarPorFestival(idFestival);
+        List<RankingUnidadDTO> ranking = new ArrayList<>();
+
+        for (UnidadDeVenta u : unidades) {
+            String tipo;
+            if (u instanceof FoodTruck) {
+                tipo = "Food Truck";
+            } else {
+                tipo = "Puesto Desarmable";
+            }
+            double recaudacion = pedidoService.recaudacionPorUnidad(u.getIdUnidadDeVenta());
+            ranking.add(new RankingUnidadDTO(u.getIdUnidadDeVenta(), u.getNombre(),
+                    tipo, u.getResponsable().getUsername(), recaudacion));
+        }
+
+        // Ordenar de mayor a menor recaudacion
+
+        ranking.sort((a, b) -> Double.compare(b.getRecaudacion(), a.getRecaudacion()));
+
+        return ranking;
+    }
+
+
 }
 
