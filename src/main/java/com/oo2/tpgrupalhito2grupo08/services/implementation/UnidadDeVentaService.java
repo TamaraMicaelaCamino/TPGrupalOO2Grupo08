@@ -128,6 +128,41 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         return ranking;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReporteMayoresCanonDTO> unidadesConMayorCanon(Long idFestival, int x) {
+        List<ReporteMayoresCanonDTO> reporte = new ArrayList<>();
+
+        for (UnidadDeVenta u : unidadRepository.buscarPorFestival(idFestival)) {
+            String tipo;
+            if (u instanceof FoodTruck) {
+                tipo = "Food Truck";
+            } else {
+                tipo = "Puesto Desarmable";
+            }
+            double canon = u.calcularCanon(u.getFestival().getCosto());
+            reporte.add(new ReporteMayoresCanonDTO(u.getNombre(), u.getCodigo(), tipo, canon));
+        }
+
+        // Ordenar de mayor a menor canon
+        reporte.sort((a, b) -> Double.compare(b.getCanon(), a.getCanon()));
+
+        // Quedarse con las primeras (lo que ingreso por parametro)
+        List<ReporteMayoresCanonDTO> primeras = new ArrayList<>();
+        for (int i = 0; i < reporte.size() && i < x; i++) {
+            primeras.add(reporte.get(i));
+        }
+        return primeras;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long cantidadDeUnidades(Long idFestival) {
+        return unidadRepository.contarPorFestival(idFestival);
+    }
+
+
+
 
 }
 
