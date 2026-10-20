@@ -32,4 +32,13 @@ public class Pedido {
     private Set<DetallePedido> detalles = new HashSet<>();
 
 
+    public double calcularTotal() {
+        double total = 0;
+        for (DetallePedido d : detalles) {
+            total += d.getPrecioVenta() * d.getCantidad();
+        }
+        return total;
+    }
+
+
 }

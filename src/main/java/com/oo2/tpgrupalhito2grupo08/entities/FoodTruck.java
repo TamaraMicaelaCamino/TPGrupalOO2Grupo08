@@ -23,6 +23,13 @@ public class FoodTruck extends UnidadDeVenta{
         this.requiereElectricidad = requiereElectricidad;
     }
 
-
+    @Override
+    public double calcularCanon(Costo costo) {
+        double canon = superficieOcupada * costo.getCostoSuperficie();
+        if (requiereElectricidad) {
+            canon += costo.getPlusElectricidad();
+        }
+        return canon;
+    }
 
 }

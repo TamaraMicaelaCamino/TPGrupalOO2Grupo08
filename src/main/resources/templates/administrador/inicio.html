@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Panel del Administrador</h1>
+        <p>Gestioná las diferentes secciones del sistema</p>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Festivales</h5>
+                    <p class="card-text text-muted">Ver los festivales cargados</p>
+                    <a class="btn btn-outline-dark" th:href="@{/admin/festivales}">Ver festivales</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Unidades de Venta</h5>
+                    <p class="card-text text-muted">Ver unidades de venta de un festival</p>
+                    <a class="btn btn-outline-dark" th:href="@{/admin/unidades}">Ver unidades</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Ranking de Unidades de Venta</h5>
+                    <p class="card-text text-muted">Ver unidades de venta de un festival ordenadas por recaudación</p>
+                    <a class="btn btn-outline-dark" th:href="@{/admin/ranking}">Ver ranking</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Unidades con Mayor Canon</h5>
+                    <p class="card-text text-muted">Ver unidades de venta que más pagaron de canon</p>
+                    <a class="btn btn-outline-dark" th:href="@{/admin/mayorcanon}">Ver Consulta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+  <div class="page-banner">
+    <h1>Ranking de Unidades de Venta</h1>
+    <p>Recaudación total por unidad de venta del festival seleccionado, ordenada de mayor a menor</p>
+  </div>
+
+  <div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-dark text-white" th:href="@{/admin}">Volver al panel</a>
+  </div>
+
+  <!-- Selector de festival -->
+  <form method="get" th:action="@{/admin/ranking}" class="mb-4">
+    <label for="idFestival" class="text-muted mb-1">Festival</label>
+    <div class="form-inline">
+      <select id="idFestival" name="idFestival" class="form-control mr-2" required>
+        <option value="">Seleccioná un festival</option>
+        <option th:each="f : ${festivales}"
+                th:value="${f.idFestival}"
+                th:text="${f.nombre}"
+                th:selected="${f.idFestival == idFestival}"></option>
+      </select>
+      <button type="submit" class="btn btn-dark">Consultar ranking</button>
+    </div>
+  </form>
+
+  <!-- Ranking del festival elegido -->
+  <div class="mb-5" th:if="${idFestival != null}">
+
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(ranking)}">
+      Este festival no tiene unidades de venta
+    </div>
+
+    <div class="table-responsive" th:unless="${#lists.isEmpty(ranking)}">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nro</th>
+          <th>Unidad de Venta</th>
+          <th>Tipo de Unidad</th>
+          <th>Responsable</th>
+          <th class="text-right">Recaudación</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r, stat : ${ranking}">
+          <td th:text="${stat.count}"></td>
+          <td class="font-weight-bold text-dark" th:text="${r.nombre}"></td>
+          <td th:text="${r.tipo}"></td>
+          <td th:text="${r.responsable}"></td>
+          <td class="text-right"
+              th:text="'$ ' + ${#numbers.formatDecimal(r.recaudacion, 1, 'POINT', 0, 'COMMA')}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
