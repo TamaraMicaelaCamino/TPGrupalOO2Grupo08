@@ -13,17 +13,25 @@
     </div>
 
     <div class="mx-auto" style="max-width: 900px;">
+        <div class="form-group">
+            <label for="tipoEmpleado">Tipo de empleado</label>
 
-        <ul class="nav nav-pills justify-content-center mb-4">
-            <li class="nav-item">
-                <a class="nav-link" th:classappend="${tipo == 'cajero'} ? 'active'"
-                   th:href="@{/responsable/empleados/nuevo(tipo='cajero')}">Cajero</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:classappend="${tipo == 'cocina'} ? 'active'"
-                   th:href="@{/responsable/empleados/nuevo(tipo='cocina')}">Personal de cocina</a>
-            </li>
-        </ul>
+            <select id="tipoEmpleado"
+                    class="form-control"
+                    onchange="window.location.assign(this.value)">
+
+                <option th:value="@{/responsable/empleados/nuevo/cajero}"
+                        th:selected="${tipo == 'cajero'}">
+                    Cajero
+                </option>
+
+                <option th:value="@{/responsable/empleados/nuevo/cocina}"
+                        th:selected="${tipo == 'cocina'}">
+                    Personal de cocina
+                </option>
+
+            </select>
+        </div>
 
         <form th:action="@{/responsable/empleados/{tipo}(tipo=${tipo})}" th:object="${empleado}" method="post">
 

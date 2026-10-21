@@ -1,14 +1,11 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
+import com.oo2.tpgrupalhito2grupo08.entities.*;
 import com.oo2.tpgrupalhito2grupo08.services.IFestivalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.oo2.tpgrupalhito2grupo08.dtos.FoodTruckDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.PuestoDesarmableDTO;
-import com.oo2.tpgrupalhito2grupo08.entities.Festival;
-import com.oo2.tpgrupalhito2grupo08.entities.FoodTruck;
-import com.oo2.tpgrupalhito2grupo08.entities.PuestoDesarmable;
-import com.oo2.tpgrupalhito2grupo08.entities.Usuario;
 import com.oo2.tpgrupalhito2grupo08.entities.enums.RolEnum;
 import com.oo2.tpgrupalhito2grupo08.repositories.IUnidadDeVentaRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
@@ -61,6 +58,11 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         unidad.setFestival(festival);
         unidad.setResponsable(responsable);
         unidadRepository.save(unidad);
+    }
+
+   @Override
+    public UnidadDeVenta buscarResponsableUnidad(String username) {
+        return unidadRepository.findByResponsable_Username(username);
     }
 
     // validaciones

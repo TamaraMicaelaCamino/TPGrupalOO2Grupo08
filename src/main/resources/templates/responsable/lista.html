@@ -32,6 +32,7 @@
         <th>Email</th>
         <th>Rol</th>
         <th>Ingreso</th>
+        <th>Fecha De Nacimiento</th>
       </tr>
       </thead>
       <tbody>
@@ -40,8 +41,9 @@
         <td th:text="${e.apellido}"></td>
         <td th:text="${e.dni}"></td>
         <td th:text="${e.email}"></td>
-        <td th:text="${e instanceof T(com.oo2.tpgrupalhito2grupo08.entities.Cajero)} ? 'Cajero' : 'Cocina'"></td>
+        <td th:text="${e.tipoPersonal == 'CAJERO' ? 'Cajero' : 'Cocina'}"></td>
         <td th:text="${#temporals.format(e.fechaIngreso, 'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(e.fechaNacimiento, 'dd/MM/yyyy')}"></td>
       </tr>
       </tbody>
     </table>

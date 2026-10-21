@@ -24,6 +24,4 @@ public class PersonalDTO {
     private LocalDate fechaNacimiento;
 
     private String tipoPersonal;
-
-    private boolean activo;
 }

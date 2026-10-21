@@ -15,6 +15,15 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  # CONFIGURACION DE MAIL
+  # Name: MAIL_USERNAME Value: email_remitente
+  # Name: MAIL_PASSWORD Value: contraseña_de_aplicacion
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
   jpa:
     show-sql: true
     hibernate:
@@ -25,5 +34,4 @@ spring:
 
   thymeleaf:
     cache: false
-
 

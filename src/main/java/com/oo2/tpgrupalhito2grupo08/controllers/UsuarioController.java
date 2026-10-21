@@ -30,7 +30,7 @@ public class UsuarioController {
                 case "ROLE_ADMINISTRADOR":
                     return "redirect:/admin";
                 case "ROLE_RESPONSABLE":
-                    return "redirect:/responsable";
+                    return ViewRouteHelper.RESPONSABLE;
                 case "ROLE_EMPLEADO":
                     return "redirect:/empleado";
             }

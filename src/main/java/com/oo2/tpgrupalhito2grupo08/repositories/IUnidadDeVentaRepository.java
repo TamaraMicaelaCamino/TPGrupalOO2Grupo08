@@ -11,4 +11,6 @@ public interface IUnidadDeVentaRepository extends JpaRepository<UnidadDeVenta, L
 
     @Query("SELECT COUNT(f) > 0 FROM FoodTruck f WHERE f.patente = :patente")
     boolean existsFoodTruckByPatente(@Param("patente") String patente);
+    UnidadDeVenta findByResponsable_Username(String username);
+
 }
