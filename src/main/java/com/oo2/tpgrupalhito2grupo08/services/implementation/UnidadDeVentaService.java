@@ -65,6 +65,11 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         unidadRepository.save(unidad);
     }
 
+   @Override
+    public UnidadDeVenta buscarResponsableUnidad(String username) {
+        return unidadRepository.findByResponsable_Username(username);
+    }
+
     // validaciones
 
     private void validarCodigo(String codigo) {

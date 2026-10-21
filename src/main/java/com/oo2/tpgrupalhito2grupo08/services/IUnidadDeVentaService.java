@@ -10,6 +10,7 @@ public interface IUnidadDeVentaService {
 
     void registrarPuestoDesarmable(PuestoDesarmableDTO dto);
 
+    UnidadDeVenta buscarResponsableUnidad(String username);
     List<UnidadDeVentaDTO> traerPorFestival(Long idFestival);
 
 

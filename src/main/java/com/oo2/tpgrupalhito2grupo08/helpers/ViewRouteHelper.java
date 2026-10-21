@@ -13,6 +13,12 @@ public final static String USER_LOGIN = "user/login";
 //REGISTRO
 public final static String REGISTRO = "registro/index";
 
+//RESPONSABLE
+public final static String RESPONSABLE_PANEL = "responsable/panel";
+
+//PERSONAL
+public final static  String PERSONAL_LISTA= "responsable/lista";
+public final static String PERSONAL_ALTA = "responsable/form";
 //ADMINISTRADOR
 public final static String ADMIN_INDEX = "administrador/inicio";
 public final static String ADMIN_FESTIVALES = "administrador/festivales";
@@ -22,5 +28,5 @@ public final static String ADMIN_MAYORCANON = "administrador/mayorcanon";
 
 /**** Redirects ****/
 public final static String HOME_ROOT = "/";
-
+public final static String RESPONSABLE = "redirect:/responsable";
 }
