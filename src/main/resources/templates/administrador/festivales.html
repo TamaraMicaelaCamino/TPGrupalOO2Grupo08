@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Festivales</h1>
+        <p>Festivales cargados en el sistema</p>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-dark text-white" th:href="@{/admin}">Volver al panel</a>
+    </div>
+
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(festivales)}">
+        Todavía no hay festivales cargados.
+    </div>
+
+    <div class="table-responsive" th:unless="${#lists.isEmpty(festivales)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Temporada</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${festivales}">
+                <td class="font-weight-bold text-dark" th:text="${f.nombre}"></td>
+                <td th:text="${f.temporada}"></td>
+                <td th:text="${#temporals.format(f.fechaInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(f.fechaFin, 'dd/MM/yyyy')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.oo2.tpgrupalhito2grupo08.entities.Festival;
 import java.util.List;
 
 public interface IFestivalService {
+
     List<FestivalDTO> traerTodos();
 
     FestivalDTO traerPorId(Long idFestival);

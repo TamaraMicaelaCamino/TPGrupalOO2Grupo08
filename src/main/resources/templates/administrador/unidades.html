@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+  <div class="page-banner">
+    <h1>Unidades de Venta</h1>
+    <p>Selecciona un festival para ver sus unidades</p>
+  </div>
+
+  <div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-dark text-white" th:href="@{/admin}">Volver al panel</a>
+  </div>
+
+  <!-- Buscador -->
+  <div class="input-group input-group-sm mb-3" style="max-width: 260px;">
+    <input type="text" id="buscador" class="form-control" placeholder="Buscar festival...">
+    <div class="input-group-append">
+      <span class="input-group-text bg-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.656a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- Tabla de festivales -->
+  <div class="alert alert-light border" th:if="${#lists.isEmpty(festivales)}">
+    Todavía no hay festivales cargados.
+  </div>
+
+  <h4 class="mb-3" th:unless="${#lists.isEmpty(festivales)}">Festivales</h4>
+  <div class="table-responsive" th:unless="${#lists.isEmpty(festivales)}">
+    <table class="table" id="tablaFestivales">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Temporada</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="f : ${festivales}"
+          style="cursor: pointer;"
+          th:classappend="${f.idFestival == idFestival} ? 'table-active'"
+          th:data-href="@{/admin/unidades(idFestival=${f.idFestival})}">
+        <td class="font-weight-bold text-dark" th:text="${f.nombre}"></td>
+        <td th:text="${f.temporada}"></td>
+        <td th:text="${#temporals.format(f.fechaInicio, 'dd/MM/yyyy')}"></td>
+        <td th:text="${#temporals.format(f.fechaFin, 'dd/MM/yyyy')}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mensaje cuando la búsqueda no encuentra nada -->
+  <div class="alert alert-light border" id="sinResultados" style="display: none;">
+    No existe el festival solicitado
+  </div>
+
+  <!-- Unidades del festival elegido -->
+  <div id="detalle" class="mb-5" th:if="${idFestival != null}">
+    <h4 class="mb-3">
+      Unidades de venta de
+      <span th:each="f : ${festivales}" th:if="${f.idFestival == idFestival}" th:text="${f.nombre}"></span>
+    </h4>
+
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(unidades)}">
+      Este festival no tiene unidades de venta
+    </div>
+
+    <div class="table-responsive" th:unless="${#lists.isEmpty(unidades)}">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre Comercial</th>
+          <th>Código</th>
+          <th>Tipo de Unidad</th>
+          <th>Superficie Ocupada</th>
+          <th>Responsable</th>
+          <th>Detalles</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${unidades}">
+          <td class="font-weight-bold text-dark" th:text="${u.nombre}"></td>
+          <td th:text="${u.codigo}"></td>
+          <td th:text="${u instanceof T(com.oo2.tpgrupalhito2grupo08.dtos.FoodTruckDTO)} ? 'Food Truck' : 'Puesto Desarmable'"></td>
+          <td th:text="${u.superficieOcupada}"></td>
+          <td th:text="${u.usuario?.username}"></td>
+
+          <!-- Food Truck -->
+          <td th:if="${u instanceof T(com.oo2.tpgrupalhito2grupo08.dtos.FoodTruckDTO)}">
+            Patente: <span th:text="${u.patente}"></span><br>
+            Conexión Eléctrica: <span th:text="${u.requiereElectricidad} ? 'Si' : 'No'"></span>
+          </td>
+
+          <!-- Puesto Desarmable -->
+          <td th:unless="${u instanceof T(com.oo2.tpgrupalhito2grupo08.dtos.FoodTruckDTO)}">
+            Cantidad de Carpas: <span th:text="${u.cantCarpas}"></span><br>
+            Tiempo de Montaje: <span th:text="${u.tiempoDeMontaje}"></span> min
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+<script th:src="@{/js/unidades.js}"></script>
+
+</body>
+</html>
