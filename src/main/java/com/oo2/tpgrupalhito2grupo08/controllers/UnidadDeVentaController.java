@@ -79,7 +79,7 @@ public class UnidadDeVentaController {
         mAV.addObject(FOODTRUCK_ATTR, foodTruck);
         mAV.addObject(PUESTO_ATTR, puesto);
         mAV.addObject(TIPO_ATTR, tipo);
-        mAV.addObject(FESTIVALES_ATTR, festivalService.traerTodos());
+        mAV.addObject(FESTIVALES_ATTR, festivalService.traerActivos());
         return mAV;
     }
 }

@@ -18,7 +18,7 @@ public class HomeController {
     @GetMapping("/")
     public ModelAndView index() {
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);
-        mAV.addObject("festivales", festivalService.traerTodos());
+        mAV.addObject("festivales", festivalService.traerActivos());
         return mAV;
     }
 

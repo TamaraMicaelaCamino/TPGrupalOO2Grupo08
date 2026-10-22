@@ -32,6 +32,9 @@ public class Festival {
     @Column(name="fechaFin", nullable = false)
     private LocalDate fechaFin;
 
+    @Column(nullable = false)
+    private boolean activo;
+
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL

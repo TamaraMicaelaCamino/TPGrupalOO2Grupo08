@@ -47,7 +47,15 @@ public class FestivalService implements IFestivalService {
                         "El festival no existe, id: " + idFestival));
     }
 
-
+    @Override
+    public List<FestivalDTO> traerActivos() {
+        List<FestivalDTO> festivalDTOS = new ArrayList<>();
+        for (Festival festival : festivalRepository.buscarActivos()) {
+            FestivalDTO dto = modelMapper.map(festival, FestivalDTO.class);
+            festivalDTOS.add(dto);
+        }
+        return festivalDTOS;
+    }
 
 
 }
