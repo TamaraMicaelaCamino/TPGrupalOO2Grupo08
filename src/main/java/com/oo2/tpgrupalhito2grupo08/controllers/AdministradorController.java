@@ -66,7 +66,6 @@ public class AdministradorController {
     public ModelAndView mayorCanon(@RequestParam(required = false) Long idFestival,
                                    @RequestParam(defaultValue = "1") int x) {
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.ADMIN_MAYORCANON);
-
         List<FestivalDTO> festivales = festivalService.traerTodos();
         List<Long> cantidades = new ArrayList<>();
         for (FestivalDTO f : festivales) {
