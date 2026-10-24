@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name="personal")
@@ -89,4 +91,19 @@ public abstract class Personal {
         }
         return fechaNacimiento;
     }
+
+
+    public abstract double calcularSueldoMensual(Costo costo, LocalDate fechaReferencia);
+
+
+    //Calcula cuantos anios completos pasaron desde que la persona ingreso hasta la fechaReferencia
+    public int getAntiguedadEnAnios(LocalDate fechaReferencia) {
+       if (fechaReferencia.isBefore(fechaIngreso)) {
+           return 0;
+       }
+       return Period.between(fechaIngreso, fechaReferencia).getYears();
+   }
+
+
+
 }

@@ -5,6 +5,7 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,4 +72,17 @@ public class Festival {
          this.fechaInicio=fechaInicio;
          this.fechaFin=fechaFin;
     }
+
+
+     /// calcula cuantos dias dura el festival
+    public long getDuracionEnDias() {
+        return ChronoUnit.DAYS.between(fechaInicio, fechaFin) + 1;
+    } //cuenta los días entre las dos fechas, sin incluir el ultimo.
+    // El + 1 hace que el rango sea inclusivo (cuenta tanto el dia de inicio como el de fin).
+
+    public double getPorcentajePorDias() {
+        return Math.ceil(getDuracionEnDias() / 15.0) * 0.5; //0.5 -->es fijo para cada tramo(se lo multiplica despues del ceil)
+    }//devuelve el porcentaje en forma DECIMAL con respecto a la cant de dias del festival
+    //15.0 es la cantidad de días que tiene cada tramo
+
 }

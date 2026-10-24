@@ -62,4 +62,15 @@ public class PersonalCocina extends Personal{
     public String getTipoPersonal() {
         return this.categoria.toString();
     }
+
+    @Override
+    public double calcularSueldoMensual(Costo costo, LocalDate fechaReferencia) {
+        double plus = switch (categoria) {
+            case COCINERO   -> costo.getPlusCocinero();
+            case AYUDANTE   -> costo.getPlusAyudante();
+            case LAVAPLATOS -> costo.getPlusLavaplatos();
+        };
+        return costo.getSueldoBase() + plus;//100000 + el tipo de plus -->100%(?)
+    }
+
 }
