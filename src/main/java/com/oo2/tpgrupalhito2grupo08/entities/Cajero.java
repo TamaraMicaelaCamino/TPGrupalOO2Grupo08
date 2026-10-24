@@ -44,4 +44,15 @@ public class Cajero extends Personal {
     public String getTipoPersonal() {
         return "CAJERO";
     }
+
+    @Override
+    public double calcularSueldoMensual(Costo costo, LocalDate fechaReferencia) {
+        return costo.getSueldoBase() + getAntiguedadEnAnios(fechaReferencia) * costo.getPlusAntiguedad();
+    }
+
+
+
+
+
+
 }
