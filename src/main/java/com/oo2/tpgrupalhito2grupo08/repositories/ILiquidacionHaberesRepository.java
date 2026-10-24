@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ILiquidacionHaberesRepository extends JpaRepository<LiquidacionHaberes, Long> {
 
     @Query("SELECT l FROM LiquidacionHaberes l WHERE l.personal = :personal AND l.unidadDeVenta = :unidad")
-    Optional<LiquidacionHaberes> buscarPorPersonalYUnidad(@Param("personal") Personal personal,@Param("unidad") UnidadDeVenta unidad);
+    Optional<LiquidacionHaberes> buscarPersonalYUnidad(@Param("personal") Personal personal,@Param("unidad") UnidadDeVenta unidad);
 
     @Query("SELECT l FROM LiquidacionHaberes l WHERE l.unidadDeVenta.idUnidadDeVenta = :idUnidad")
     List<LiquidacionHaberes> listarPorUnidad(@Param("idUnidad") Long idUnidad);

@@ -21,7 +21,7 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
         this.unidadVentaService = unidadVentaService;
     }
 
-    //Calcula el sueldo detodo el personal activo y lo guarda (o actualiza)
+    //Calcula el sueldo detodo el personal activo y lo guarda
     @Override
     @Transactional
     public List<LiquidacionHaberesDTO> liquidarUnidad(Long idUnidad) {
@@ -47,7 +47,7 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
         }
         return resultado;
     }
-   //Devuelve las liquidaciones ya guardadas de un empleado, en todos los festivales-->pdf
+   //Devuelve las liquidaciones ya guardadas de un empleado, en todos los festivales pdf
     @Override
     @Transactional(readOnly = true)
     public List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal) {
@@ -69,7 +69,7 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
         double total = bruto * festival.getPorcentajePorDias();
 
         // si ya estaba liquidado, se actualiza en vez de duplicar
-        LiquidacionHaberes liq = liquidacionRepository.buscarPorPersonalYUnidad(personal, unidad)
+        LiquidacionHaberes liq = liquidacionRepository.buscarPersonalYUnidad(personal, unidad)
                 .orElse(new LiquidacionHaberes());
 
         liq.setPersonal(personal);

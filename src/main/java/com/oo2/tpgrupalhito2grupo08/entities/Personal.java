@@ -95,8 +95,6 @@ public abstract class Personal {
 
     public abstract double calcularSueldoMensual(Costo costo, LocalDate fechaReferencia);
 
-
-    //Calcula cuantos anios completos pasaron desde que la persona ingreso hasta la fechaReferencia
     public int getAntiguedadEnAnios(LocalDate fechaReferencia) {
        if (fechaReferencia.isBefore(fechaIngreso)) {
            return 0;

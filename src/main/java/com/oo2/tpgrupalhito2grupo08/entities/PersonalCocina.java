@@ -70,7 +70,7 @@ public class PersonalCocina extends Personal{
             case AYUDANTE   -> costo.getPlusAyudante();
             case LAVAPLATOS -> costo.getPlusLavaplatos();
         };
-        return costo.getSueldoBase() + plus;//100000 + el tipo de plus -->100%(?)
+        return costo.getSueldoBase() + plus;
     }
 
 }

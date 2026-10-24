@@ -1,6 +1,5 @@
 package com.oo2.tpgrupalhito2grupo08.controllers;
 import java.security.Principal;
-
 import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,7 @@ import com.oo2.tpgrupalhito2grupo08.services.ILiquidacionHaberesService;
 import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_RESPONSABLE')")
+@PreAuthorize("hasRole('RESPONSABLE')")
 @RequestMapping("/responsable")
 public class LiquidacionHaberesController {
 

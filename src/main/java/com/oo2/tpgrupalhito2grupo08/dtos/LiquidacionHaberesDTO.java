@@ -8,7 +8,6 @@ import lombok.*;
 @Builder
 public class LiquidacionHaberesDTO {
 
-
     private Long idLiquidacion;
     private String nombreCompleto;
     private String tipoPersonal;
