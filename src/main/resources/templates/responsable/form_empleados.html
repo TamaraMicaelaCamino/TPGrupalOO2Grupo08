@@ -102,9 +102,24 @@
                                    th:errors="*{vencimientoCarnetDeManipulacion}"></small>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Unidad de venta</label>
+                        <select class="form-control"
+                                th:field="*{idUnidadDeVenta}">
+                            <option value="">Seleccioná una unidad</option>
+
+                            <option th:each="u : ${unidades}"
+                                    th:value="${u.idUnidadDeVenta}"
+                                    th:text="${u.nombre}">
+                            </option>
+                        </select>
+
+                        <small class="text-danger"
+                               th:errors="*{idUnidadDeVenta}">
+                        </small>
+                    </div>
                 </div>
             </div>
-
             <div class="text-center mt-3 mb-5">
                 <button type="submit" class="btn btn-dark">Dar de alta</button>
                 <a class="btn btn-outline-dark ml-2" th:href="@{/responsable/empleados}">Cancelar</a>

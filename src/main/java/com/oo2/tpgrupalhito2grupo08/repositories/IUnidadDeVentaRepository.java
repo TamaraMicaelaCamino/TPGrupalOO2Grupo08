@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUnidadDeVentaRepository extends JpaRepository<UnidadDeVenta, Long> {
 
@@ -13,7 +14,10 @@ public interface IUnidadDeVentaRepository extends JpaRepository<UnidadDeVenta, L
 
     @Query("SELECT COUNT(f) > 0 FROM FoodTruck f WHERE f.patente = :patente")
     boolean existsFoodTruckByPatente(@Param("patente") String patente);
-    UnidadDeVenta findByResponsable_Username(String username);
+
+    List<UnidadDeVenta> findByResponsable_Username(String username);
+
+    Optional<UnidadDeVenta> findByIdUnidadDeVentaAndResponsable_Username(Long idUnidadDeVenta, String username);
 
     @Query("SELECT u FROM UnidadDeVenta u WHERE u.festival.idFestival = :idFestival")
     List<UnidadDeVenta> buscarPorFestival(@Param("idFestival") Long idFestival);

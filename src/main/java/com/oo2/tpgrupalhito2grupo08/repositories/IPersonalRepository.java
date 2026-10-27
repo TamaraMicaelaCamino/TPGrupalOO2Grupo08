@@ -11,9 +11,11 @@ public interface IPersonalRepository extends JpaRepository<Personal, Long> {
     @Query("""
     SELECT p
     FROM Personal p
-    JOIN p.unidadDeVenta u 
-    WHERE u.responsable.username =:userResponsable AND p.activo = true      
-""")
-    List<Personal> traerPersonalPorResponsableDeUnidad(@Param("userResponsable") String userResponsable);
-
+    JOIN p.unidadDeVenta u
+    WHERE u.responsable.username = :userResponsable
+      AND p.activo = true
+      AND (:idUnidadDeVenta IS NULL
+           OR u.idUnidadDeVenta = :idUnidadDeVenta)
+    """)
+    List<Personal> findByIdUnidadDeVentaAndResponsable_Username(@Param("idUnidadDeVenta") Long idUnidadDeVenta,@Param("userResponsable") String userResponsable);
 }
