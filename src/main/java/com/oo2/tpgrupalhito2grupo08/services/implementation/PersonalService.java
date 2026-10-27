@@ -45,9 +45,9 @@ public class PersonalService implements IPersonalService {
     }
 
     @Override
-    public List<PersonalDTO> traerPersonalPorResponsableDeUnidad(String userResponsable){
+    public List<PersonalDTO> traerPersonalPorResponsableDeUnidad(Long idUnidadDeVenta, String userResponsable){
         List<PersonalDTO> personalDTOS = new ArrayList<>();
-        for (Personal personal : personalRepository.traerPersonalPorResponsableDeUnidad(userResponsable)){
+        for (Personal personal : personalRepository.findByIdUnidadDeVentaAndResponsable_Username(idUnidadDeVenta,userResponsable)){
             PersonalDTO dto = modelMapper.map(personal, PersonalDTO.class);
             dto.setTipoPersonal(personal.getTipoPersonal());
             personalDTOS.add(dto);
@@ -69,7 +69,7 @@ public class PersonalService implements IPersonalService {
     public void resgistrarCajero(CajeroDTO cajeroDTO, String userResponsable){
 
         String password= generadorPassword.generar();
-        UnidadDeVenta unidadDeVenta= unidadService.buscarResponsableUnidad(userResponsable);
+        UnidadDeVenta unidadDeVenta= unidadService.buscarUnidadDelResponsable(cajeroDTO.getIdUnidadDeVenta(),userResponsable);
         UsuarioDTO usuarioDTO= new UsuarioDTO(cajeroDTO.getEmail(), password);
         Usuario usuario = usuarioService.crearUsuario(usuarioDTO, RolEnum.EMPLEADO);
         Cajero nuevo = new Cajero(
@@ -91,7 +91,7 @@ public class PersonalService implements IPersonalService {
     @Override
     public void registrarPersonalCocina(PersonalCocinaDTO personalCocinaDTO, String userResponsable) {
         String password= generadorPassword.generar();
-        UnidadDeVenta unidadDeVenta= unidadService.buscarResponsableUnidad(userResponsable);
+        UnidadDeVenta unidadDeVenta= unidadService.buscarUnidadDelResponsable(personalCocinaDTO.getIdUnidadDeVenta(),userResponsable);
         UsuarioDTO usuarioDTO= new UsuarioDTO(personalCocinaDTO.getEmail(), password);
         Usuario usuario = usuarioService.crearUsuario(usuarioDTO, RolEnum.EMPLEADO);
         PersonalCocina nuevo= new PersonalCocina(

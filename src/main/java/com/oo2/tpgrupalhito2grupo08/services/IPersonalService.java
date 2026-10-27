@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IPersonalService {
 
-    List<PersonalDTO> traerPersonalPorResponsableDeUnidad(String userResponsable);
+    List<PersonalDTO> traerPersonalPorResponsableDeUnidad(Long idUnidaDeVenta, String userResponsable);
 
     PersonalDTO traerPorId(Long idPersonal);
 
