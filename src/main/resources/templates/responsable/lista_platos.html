@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Platos</h1>
+        <p>Platos activos en tu unidad de venta</p>
+    </div>
+
+    <div class="alert alert-success" role="alert" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+    <form th:action="@{/responsable/platos}"
+          method="get"
+          class="mb-3">
+
+        <div class="form-group">
+            <label for="idUnidadDeVenta">Unidad de venta</label>
+
+            <select id="idUnidadDeVenta"
+                    name="idUnidadDeVenta"
+                    class="form-control">
+
+                <option value="">Todas mis unidades</option>
+
+                <option th:each="u : ${unidades}"
+                        th:value="${u.idUnidadDeVenta}"
+                        th:text="${u.nombre}"
+                        th:selected="${u.idUnidadDeVenta == idUnidadDeVenta}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-dark">
+            Consultar
+        </button>
+    </form>
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(platos)}">
+        Todavía no tenés platos registrados.
+    </div>
+
+    <div class="table-responsive" th:unless="${#lists.isEmpty(platos)}">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Costo de produccion</th>
+                <th>Precio de venta</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${platos}">
+                <td class="font-weight-bold" th:text="${p.nombre}"></td>
+                <td th:text="${p.costoProduccion}"></td>
+                <td th:text="${p.precioVenta}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
