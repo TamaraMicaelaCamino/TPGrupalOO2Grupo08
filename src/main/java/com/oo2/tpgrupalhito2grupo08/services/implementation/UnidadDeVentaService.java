@@ -65,9 +65,17 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         unidadRepository.save(unidad);
     }
 
-   @Override
-    public UnidadDeVenta buscarResponsableUnidad(String username) {
+
+    @Override
+    public List<UnidadDeVenta> listarUnidadesResponsable(String username) {
         return unidadRepository.findByResponsable_Username(username);
+    }
+
+    @Override
+    public UnidadDeVenta buscarUnidadDelResponsable(Long idUnidadDeVenta, String username) {
+        return unidadRepository.findByIdUnidadDeVentaAndResponsable_Username(idUnidadDeVenta,username)
+                .orElseThrow(
+                        ()-> new IllegalArgumentException("La unidad no existe o no pertenece al responsable"));
     }
 
     // validaciones

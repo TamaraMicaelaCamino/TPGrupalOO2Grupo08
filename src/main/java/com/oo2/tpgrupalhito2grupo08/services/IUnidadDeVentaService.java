@@ -11,12 +11,13 @@ public interface IUnidadDeVentaService {
 
     void registrarPuestoDesarmable(PuestoDesarmableDTO dto);
 
-    UnidadDeVenta buscarResponsableUnidad(String username);
+    List<UnidadDeVenta> listarUnidadesResponsable(String username);
+
+    UnidadDeVenta buscarUnidadDelResponsable(Long idUnidadDeVenta, String username);
 
     List<UnidadDeVentaDTO> traerPorFestival(Long idFestival);
 
     UnidadDeVenta obtenerUnidadPorId(Long id);
-
     List<RankingUnidadDTO> rankingDeUnidades(Long idFestival);
 
     List<ReporteMayoresCanonDTO> unidadesConMayorCanon(Long idFestival, int x);

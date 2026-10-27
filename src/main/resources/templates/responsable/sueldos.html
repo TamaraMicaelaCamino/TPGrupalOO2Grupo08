@@ -9,8 +9,7 @@
 
     <div class="page-banner">
         <h1>Sueldos del Personal</h1>
-        <p th:text="'Unidad de Venta: ' + ${unidad}">Unidad de Venta</p>
-        <p th:text="'Festival: ' + ${festival}">Festival</p>
+        <p>Consultá las liquidaciones guardadas de tus unidades de venta.</p>
     </div>
 
     <div class="d-flex justify-content-end mb-3">
@@ -23,7 +22,51 @@
         El cajero se le suma la antigüedad, donde 1 año equivale a $5.000.
     </p>
     <h3 class="fw-bold mb-3">Liquidación de Haberes</h3>
+    <form id="form-consulta"
+          th:action="@{/responsable/sueldos}"
+          method="get"
+          class="mb-3">
 
+        <div class="form-group">
+            <label for="idUnidadDeVenta">Unidad de venta</label>
+
+            <select id="idUnidadDeVenta"
+                    name="idUnidadDeVenta"
+                    class="form-control">
+
+                <option value="">Todas mis unidades</option>
+
+                <option th:each="u : ${unidades}"
+                        th:value="${u.idUnidadDeVenta}"
+                        th:text="${u.nombre}"
+                        th:selected="${u.idUnidadDeVenta == idUnidadDeVenta}">
+                </option>
+            </select>
+        </div>
+    </form>
+    <div class="d-flex align-items-center mb-3">
+
+        <button type="submit"
+                form="form-consulta"
+                class="btn btn-dark mr-2">
+            Consultar
+        </button>
+
+        <form th:if="${idUnidadDeVenta != null}"
+              th:action="@{/responsable/sueldos/liquidar}"
+              method="post"
+              class="mb-0">
+
+            <input type="hidden"
+                   name="idUnidadDeVenta"
+                   th:value="${idUnidadDeVenta}">
+
+            <button type="submit" class="btn btn-dark">
+                Liquidar unidad consultada
+            </button>
+        </form>
+
+    </div>
     <div class="table-responsive mb-4">
         <table class="table table-striped align-middle">
             <thead>
@@ -36,6 +79,8 @@
                 <th>Sueldo Base</th>
                 <th>Plus</th>
                 <th>Total a cobrar</th>
+                <th>Unidad</th>
+                <th>Festival</th>
             </tr>
             </thead>
             <tbody>
@@ -50,9 +95,11 @@
         ? ${#numbers.formatDecimal(s.adicional, 1, 'POINT', 0, 'COMMA')} + ' (' + ${s.antiguedad} + ' × 5.000)'
         : ${#numbers.formatDecimal(s.adicional, 1, 'POINT', 0, 'COMMA')}">0</td>
                 <td><strong th:text="${#numbers.formatDecimal(s.total, 1, 'POINT', 0, 'COMMA')}">0</strong></td>
+                <td th:text="${s.nombreUnidad}">Unidad</td>
+                <td th:text="${s.nombreFestival}">Festival</td>
             </tr>
             <tr th:if="${#lists.isEmpty(sueldos)}">
-                <td colspan="8" class="text-center text-muted">No hay personal activo en la unidad.</td>
+                <td colspan="10" class="text-center text-muted">No hay personal activo en la unidad.</td>
             </tr>
             </tbody>
         </table>

@@ -36,4 +36,6 @@ public class AltaPersonalDTO {
     @Past(message = "La fecha de nacimiento debe ser anterior a hoy")
     private LocalDate fechaNacimiento;
 
+    @NotNull(message = "La unidad es obligatoria")
+    private Long idUnidadDeVenta;
 }

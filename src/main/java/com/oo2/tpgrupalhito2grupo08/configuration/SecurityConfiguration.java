@@ -27,11 +27,10 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-                .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/error", "/css/**", "/imgs/**", "/js/**", "/vendor/**", "/api/v1/**").permitAll();
-                    auth.anyRequest().permitAll(); //TEMPORAL:Es para ver tus propias vistas sin tener que iniciar sesion cada rato. Al terminar de crear tus vistas y que funcionen completamente le agregas: .authenticated() y @PreAuthorize en el controller, según el rol que corresponda.
+                    auth.requestMatchers("/", "/error", "/css/**", "/imgs/**", "/js/**", "/vendor/**", "/api/v1/**", "/registro/**").permitAll();
+                    auth.anyRequest().authenticated();
                 })
                 .formLogin(login -> {
                     login.loginPage("/login");

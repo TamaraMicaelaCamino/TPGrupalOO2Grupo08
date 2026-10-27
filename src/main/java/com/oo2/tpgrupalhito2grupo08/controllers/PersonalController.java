@@ -7,15 +7,13 @@ import com.oo2.tpgrupalhito2grupo08.entities.enums.Categoria;
 import com.oo2.tpgrupalhito2grupo08.entities.enums.TurnoEnum;
 import com.oo2.tpgrupalhito2grupo08.helpers.ViewRouteHelper;
 import com.oo2.tpgrupalhito2grupo08.services.implementation.PersonalService;
+import com.oo2.tpgrupalhito2grupo08.services.implementation.UnidadDeVentaService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,37 +24,43 @@ import java.security.Principal;
 @RequestMapping("/responsable/empleados")
 public class PersonalController {
     private final PersonalService personalService;
+    private final UnidadDeVentaService unidadDeVentaService;
 
-    public PersonalController(PersonalService personalService){
+    public PersonalController(PersonalService personalService, UnidadDeVentaService unidadDeVentaService){
         this.personalService=personalService;
+        this.unidadDeVentaService = unidadDeVentaService;
     }
     @GetMapping
-    public ModelAndView verEmpleados(Principal principal){
+    public ModelAndView verEmpleados(@RequestParam(required = false) Long idUnidadDeVenta,
+                                     Principal principal){
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.PERSONAL_LISTA);
-        mAV.addObject("empleados", personalService.traerPersonalPorResponsableDeUnidad(principal.getName()));
+        mAV.addObject("empleados", personalService.traerPersonalPorResponsableDeUnidad(idUnidadDeVenta,principal.getName()));
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
+        mAV.addObject("idUnidadDeVenta", idUnidadDeVenta);
         return mAV;
     }
 
     @GetMapping({"/nuevo", "/nuevo/cajero"})
-    public ModelAndView formularioCajero() {
+    public ModelAndView formularioCajero(Principal principal) {
         ModelAndView mAV =
                 new ModelAndView(ViewRouteHelper.PERSONAL_ALTA);
 
         mAV.addObject("empleado", new CajeroDTO());
         mAV.addObject("tipo", "cajero");
         mAV.addObject("turnos", TurnoEnum.values());
-
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
         return mAV;
     }
 
     @GetMapping("/nuevo/cocina")
-    public ModelAndView formularioCocina() {
+    public ModelAndView formularioCocina(Principal principal) {
         ModelAndView mAV =
                 new ModelAndView(ViewRouteHelper.PERSONAL_ALTA);
 
         mAV.addObject("empleado", new PersonalCocinaDTO());
         mAV.addObject("tipo", "cocina");
         mAV.addObject("categorias", Categoria.values());
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
         return mAV;
     }
 
@@ -78,6 +82,7 @@ public class PersonalController {
         mAV.addObject("empleado", dto);
         mAV.addObject("tipo", "cajero");
         mAV.addObject("turnos", TurnoEnum.values());
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
         return mAV;
     }
 
@@ -99,6 +104,7 @@ public class PersonalController {
         mAV.addObject("empleado", dto);
         mAV.addObject("tipo", "cocina");
         mAV.addObject("categorias", Categoria.values());
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
         return mAV;
     }
 }
