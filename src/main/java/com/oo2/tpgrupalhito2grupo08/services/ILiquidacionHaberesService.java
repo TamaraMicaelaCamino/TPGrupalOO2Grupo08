@@ -1,6 +1,8 @@
 package com.oo2.tpgrupalhito2grupo08.services;
 
 import com.oo2.tpgrupalhito2grupo08.dtos.LiquidacionHaberesDTO;
+import com.oo2.tpgrupalhito2grupo08.entities.LiquidacionHaberes;
+
 import java.util.List;
 
 public interface ILiquidacionHaberesService {
@@ -12,4 +14,7 @@ public interface ILiquidacionHaberesService {
     List<LiquidacionHaberesDTO> consultarPorResponsable(Long idUnidadDeVenta, String username);
 
     List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal);
+
+
+    List<LiquidacionHaberes> listarFinalizadosxPersonal(Long idPersonal);
 }
