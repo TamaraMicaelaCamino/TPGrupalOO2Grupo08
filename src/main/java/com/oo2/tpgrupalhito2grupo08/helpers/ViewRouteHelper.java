@@ -29,4 +29,5 @@ public final static String ADMIN_MAYORCANON = "administrador/mayorcanon";
 /**** Redirects ****/
 public final static String HOME_ROOT = "/";
 public final static String RESPONSABLE = "redirect:/responsable";
+public final static String RESPONSABLE_SUELDO_RD = "redirect:/responsable/sueldos?idUnidadDeVenta=";
 }

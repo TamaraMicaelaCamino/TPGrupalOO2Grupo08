@@ -47,7 +47,37 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
         }
         return resultado;
     }
-   //Devuelve las liquidaciones ya guardadas de un empleado, en todos los festivales pdf
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<LiquidacionHaberesDTO> consultarPorResponsable(
+            Long idUnidadDeVenta, String username) {
+
+        List<UnidadDeVenta> unidades;
+
+        if (idUnidadDeVenta == null) {
+            unidades = unidadVentaService.listarUnidadesResponsable(username);
+        } else {
+            UnidadDeVenta unidad =
+                    unidadVentaService.buscarUnidadDelResponsable(
+                            idUnidadDeVenta, username);
+
+            unidades = List.of(unidad);
+        }
+
+        List<LiquidacionHaberesDTO> resultado = new ArrayList<>();
+
+        for (UnidadDeVenta unidad : unidades) {
+            List<LiquidacionHaberesDTO> liquidaciones =
+                    traerPorUnidad(unidad.getIdUnidadDeVenta());
+
+            resultado.addAll(liquidaciones);
+        }
+
+        return resultado;
+    }
+
+    //Devuelve las liquidaciones ya guardadas de un empleado, en todos los festivales pdf
     @Override
     @Transactional(readOnly = true)
     public List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal) {
