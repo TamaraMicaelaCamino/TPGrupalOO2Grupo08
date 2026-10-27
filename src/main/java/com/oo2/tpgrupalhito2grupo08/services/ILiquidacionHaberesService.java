@@ -9,5 +9,7 @@ public interface ILiquidacionHaberesService {
 
     List<LiquidacionHaberesDTO> traerPorUnidad(Long idUnidad);
 
+    List<LiquidacionHaberesDTO> consultarPorResponsable(Long idUnidadDeVenta, String username);
+
     List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal);
 }
