@@ -19,6 +19,10 @@ public final static String RESPONSABLE_SUELDOS = "responsable/sueldos";
 //PERSONAL
 public final static  String PERSONAL_LISTA= "responsable/lista_empleados";
 public final static String PERSONAL_ALTA = "responsable/form_empleados";
+
+//PLATOS
+public final static String PLATOS_LISTA = "responsable/lista_platos";
+public final static String PLATOS_ALTA = "responsable/form_platos";
 //ADMINISTRADOR
 public final static String ADMIN_INDEX = "administrador/inicio";
 public final static String ADMIN_FESTIVALES = "administrador/festivales";
