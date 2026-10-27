@@ -23,4 +23,5 @@ public class FestivalDTO {
 
     private boolean activo;
 
+
 }

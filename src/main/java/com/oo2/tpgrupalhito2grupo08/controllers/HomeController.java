@@ -14,7 +14,7 @@ public class HomeController {
         this.festivalService = festivalService;
     }
 
-    // GET Example: SERVER/
+
     @GetMapping("/")
     public ModelAndView index() {
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.INDEX);

@@ -53,4 +53,6 @@ public abstract class UnidadDeVenta {
 
     public abstract double calcularCanon(Costo costo);
 
+    public abstract String getTipoUnidad();
+
 }

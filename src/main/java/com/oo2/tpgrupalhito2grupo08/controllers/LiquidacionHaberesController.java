@@ -17,7 +17,7 @@ public class LiquidacionHaberesController {
 
     private static final String SUELDOS_ATTR = "sueldos";
     private static final String UNIDAD_ATTR = "unidad";
-
+    private static final String FESTIVAL_ATTR = "festival";
     private final ILiquidacionHaberesService liquidacionService;
     private final IUnidadDeVentaService unidadDeVentaService;
 
@@ -30,14 +30,21 @@ public class LiquidacionHaberesController {
     @GetMapping("/sueldos")
     public ModelAndView verSueldos(Principal principal) {
         UnidadDeVenta unidad = unidadDeVentaService.buscarResponsableUnidad(principal.getName());
+        ModelAndView mAV = new ModelAndView(ViewRouteHelper.RESPONSABLE);
 
-        if (unidad == null) {
-            return new ModelAndView(ViewRouteHelper.RESPONSABLE); // "redirect:/responsable"
+        if (unidad != null) {
+            mAV.setViewName(ViewRouteHelper.RESPONSABLE_SUELDOS);
+            mAV.addObject(SUELDOS_ATTR, liquidacionService.liquidarUnidad(unidad.getIdUnidadDeVenta()));
+            mAV.addObject(UNIDAD_ATTR, unidad.getNombre());
+            mAV.addObject(FESTIVAL_ATTR,unidad.getFestival().getNombre());
         }
 
-        ModelAndView mAV = new ModelAndView(ViewRouteHelper.RESPONSABLE_SUELDOS);
-        mAV.addObject(SUELDOS_ATTR, liquidacionService.liquidarUnidad(unidad.getIdUnidadDeVenta()));
-        mAV.addObject(UNIDAD_ATTR, unidad.getNombre());
         return mAV;
     }
+
+
+
+
+
+
 }

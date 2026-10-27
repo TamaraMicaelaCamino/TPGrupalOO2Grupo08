@@ -10,8 +10,7 @@
     <div class="page-banner">
         <h1>Sueldos del Personal</h1>
         <p th:text="'Unidad de Venta: ' + ${unidad}">Unidad de Venta</p>
-        <p th:if="${not #lists.isEmpty(sueldos)}"
-           th:text="'Festival: ' + ${sueldos[0].nombreFestival}">Festival</p>
+        <p th:text="'Festival: ' + ${festival}">Festival</p>
     </div>
 
     <div class="d-flex justify-content-end mb-3">

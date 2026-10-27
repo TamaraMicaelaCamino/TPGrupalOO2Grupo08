@@ -2,7 +2,6 @@ package com.oo2.tpgrupalhito2grupo08.dtos;
 import lombok.*;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

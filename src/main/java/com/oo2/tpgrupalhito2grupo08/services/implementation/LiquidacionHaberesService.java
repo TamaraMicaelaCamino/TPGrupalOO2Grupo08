@@ -6,6 +6,8 @@ import com.oo2.tpgrupalhito2grupo08.services.ILiquidacionHaberesService;
 import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,30 +33,9 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
 
         for (Personal p : unidad.getPersonal()) {
             if (p.isActivo()) {
-                LiquidacionHaberes liq = liquidar(p, unidad);
-                resultado.add(convertirADTO(liq));
+                LiquidacionHaberes liq = liquidar(p, unidad); // se pasa el empleado (p) y su unidad y se lo guarda en un entidad
+                resultado.add(convertirADTO(liq));//recibe la entidad liq como parametro
             }
-        }
-        return resultado;
-    }
-   //Devuelve las liquidaciones ya guardadas de una unidad
-    @Override
-    @Transactional(readOnly = true)
-    public List<LiquidacionHaberesDTO> traerPorUnidad(Long idUnidad) {
-        List<LiquidacionHaberesDTO> resultado = new ArrayList<>();
-        for (LiquidacionHaberes l : liquidacionRepository.listarPorUnidad(idUnidad)) {
-            resultado.add(convertirADTO(l));
-        }
-        return resultado;
-    }
-   //Devuelve las liquidaciones ya guardadas de un empleado, en todos los festivales pdf
-    @Override
-    @Transactional(readOnly = true)
-    public List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal) {
-        List<LiquidacionHaberes> lista = liquidacionRepository.listarPorPersonal(idPersonal);
-        List<LiquidacionHaberesDTO> resultado = new ArrayList<>();
-        for (LiquidacionHaberes l : lista) {
-            resultado.add(convertirADTO(l));
         }
         return resultado;
     }
@@ -69,16 +50,16 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
         double total = bruto * festival.getPorcentajePorDias();
 
         // si ya estaba liquidado, se actualiza en vez de duplicar
-        LiquidacionHaberes liq = liquidacionRepository.buscarPersonalYUnidad(personal, unidad)
-                .orElse(new LiquidacionHaberes());
-
+        LiquidacionHaberes liq = liquidacionRepository.buscarPersonalYUnidad(personal, unidad)//Busca si ya existe una liquidación de este empleado en esta unidad
+                .orElse(new LiquidacionHaberes());//si tiene algo dame eso, si está vacía dame una liquidación nueva
+       // se guarda los datos de cuentas y a quien pertenece y en que unidad
         liq.setPersonal(personal);
         liq.setUnidadDeVenta(unidad);
         liq.setSueldoBase(costo.getSueldoBase());
-        liq.setAdicional(bruto - costo.getSueldoBase());
+        liq.setAdicional(bruto - costo.getSueldoBase());//antiguedad o plus
         liq.setTotal(total);
 
-        return liquidacionRepository.save(liq);
+        return liquidacionRepository.save(liq);//Inserta o actualiza en la base
     }
 
     // conversion a DTO
@@ -102,11 +83,23 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
                 .build();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<LiquidacionHaberes> listarFinalizadosxPersonal(Long idPersonal) {
+        return liquidacionRepository.listarFinalizadosPorPersonal(idPersonal, LocalDate.now());
+    }
 
-
-
-
-
+   //Devuelve las liquidaciones ya guardadas de un empleado, en todos los festivales pdf
+    @Override
+    @Transactional(readOnly = true)
+    public List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal) {
+        List<LiquidacionHaberes> lista = liquidacionRepository.listarPorPersonal(idPersonal);
+        List<LiquidacionHaberesDTO> resultado = new ArrayList<>();
+        for (LiquidacionHaberes l : lista) {
+            resultado.add(convertirADTO(l));
+        }
+        return resultado;
+    }
 
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IFestivalRepository extends JpaRepository<Festival,Long > {
 
-    @Query("SELECT f FROM Festival f WHERE f.activo = true")
+    @Query("SELECT f FROM Festival f WHERE f.activo = true AND f.fechaFin >= CURRENT_DATE")
     List<Festival> buscarActivos();
 
 

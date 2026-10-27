@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,5 +22,20 @@ public interface ILiquidacionHaberesRepository extends JpaRepository<Liquidacion
 
     @Query("SELECT l FROM LiquidacionHaberes l WHERE l.personal.idPersonal = :idPersonal")
     List<LiquidacionHaberes> listarPorPersonal(@Param("idPersonal") Long idPersonal);
+
+    @Query("""
+    SELECT l FROM LiquidacionHaberes l
+    JOIN FETCH l.unidadDeVenta u
+    JOIN FETCH u.festival f
+    WHERE l.personal.idPersonal = :idPersonal
+      AND f.fechaFin < :hoy
+""")
+    List<LiquidacionHaberes> listarFinalizadosPorPersonal(@Param("idPersonal") Long idPersonal,
+                                                          @Param("hoy") LocalDate hoy);
+
+
+
+
+
 
 }

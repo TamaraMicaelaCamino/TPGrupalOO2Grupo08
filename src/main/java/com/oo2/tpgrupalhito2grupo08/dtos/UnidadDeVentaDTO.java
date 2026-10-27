@@ -31,4 +31,7 @@ public class UnidadDeVentaDTO {
     @NotNull(message = "Los datos del responsable son obligatorios")
     private UsuarioDTO usuario = new UsuarioDTO();   // datos del responsable
 
+
+
+
 }

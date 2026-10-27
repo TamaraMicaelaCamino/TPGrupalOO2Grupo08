@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IPersonalRepository extends JpaRepository<Personal, Long> {
     @Query("""
@@ -15,5 +16,10 @@ public interface IPersonalRepository extends JpaRepository<Personal, Long> {
     WHERE u.responsable.username =:userResponsable AND p.activo = true      
 """)
     List<Personal> traerPersonalPorResponsableDeUnidad(@Param("userResponsable") String userResponsable);
+
+
+    Optional<Personal> findByUsuarioUsername(String username);
+
+
 
 }

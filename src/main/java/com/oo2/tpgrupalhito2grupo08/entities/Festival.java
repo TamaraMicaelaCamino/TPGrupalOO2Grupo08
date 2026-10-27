@@ -79,8 +79,21 @@ public class Festival {
     }
 
     public double getPorcentajePorDias() {
+        long dias = getDuracionEnDias();
 
-        return Math.ceil(getDuracionEnDias() / 15.0) * 0.5;
+        if (dias <= 15) {
+            return 0.5;
+        }
+        if (dias <= 30) {
+            return 1.0;
+        }
+        return ((int) (dias / 15) + 1) * 0.5;
     }
+
+    public boolean estaEnCurso(LocalDate fecha) {
+        return !fecha.isBefore(fechaInicio) && !fecha.isAfter(fechaFin);
+    }
+
+
 
 }

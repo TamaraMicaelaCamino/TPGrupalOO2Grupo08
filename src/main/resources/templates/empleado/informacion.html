@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Mi información</h1>
+        <p>Festivales y unidades de venta en las que trabajaste</p>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-dark text-white" th:href="@{/empleado}">Volver al panel</a>
+    </div>
+
+    <div class="table-responsive mb-4" style="box-shadow: none;">
+        <table class="table align-middle" style="box-shadow: none; --bs-table-striped-bg: transparent;">
+            <thead>
+            <tr>
+                <th>Festival</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Estado</th>
+                <th>Unidad de Venta</th>
+                <th>Código</th>
+                <th>Tipo de Unidad</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="f : ${festivales}">
+                <td th:text="${f.festival.nombre}"></td>
+                <td th:text="${#temporals.format(f.festival.fechaInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(f.festival.fechaFin, 'dd/MM/yyyy')}"></td>
+                <td>Finalizado</td>
+                <td th:text="${f.nombreUnidad}"></td>
+                <td th:text="${f.codigoUnidad}"></td>
+                <td th:text="${f.tipoUnidad}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(festivales)}">
+                <td colspan="7" class="text-center text-muted">
+                    Todavía no trabajaste en festivales finalizados
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
