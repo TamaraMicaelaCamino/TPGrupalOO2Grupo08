@@ -35,4 +35,7 @@ public class PuestoDesarmable extends UnidadDeVenta{
     }
 
 
+    @Override
+    public String getTipoUnidad() { return "Puesto Desarmable"; }
+
 }

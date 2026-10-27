@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IPersonalRepository extends JpaRepository<Personal, Long> {
     @Query("""
@@ -18,4 +19,7 @@ public interface IPersonalRepository extends JpaRepository<Personal, Long> {
            OR u.idUnidadDeVenta = :idUnidadDeVenta)
     """)
     List<Personal> findByIdUnidadDeVentaAndResponsable_Username(@Param("idUnidadDeVenta") Long idUnidadDeVenta,@Param("userResponsable") String userResponsable);
+
+    Optional<Personal> findByUsuarioUsername(String username);
+
 }

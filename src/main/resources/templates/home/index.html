@@ -60,7 +60,6 @@
         <td th:text="${#temporals.format(f.fechaFin, 'dd/MM/yyyy')}"></td>
         <td>
           <span class="badge badge-success" th:if="${f.activo}">Activo</span>
-          <span class="badge badge-secondary" th:unless="${f.activo}">Finalizado</span>
         </td>
       </tr>
       </tbody>

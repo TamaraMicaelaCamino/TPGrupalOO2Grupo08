@@ -65,12 +65,18 @@ public class PersonalCocina extends Personal{
 
     @Override
     public double calcularSueldoMensual(Costo costo, LocalDate fechaReferencia) {
-        double plus = switch (categoria) {
-            case COCINERO   -> costo.getPlusCocinero();
-            case AYUDANTE   -> costo.getPlusAyudante();
-            case LAVAPLATOS -> costo.getPlusLavaplatos();
-        };
+        double plus = 0;
+
+        if (categoria == Categoria.COCINERO) {
+            plus = costo.getPlusCocinero();
+        } else if (categoria == Categoria.AYUDANTE) {
+            plus = costo.getPlusAyudante();
+        } else if (categoria == Categoria.LAVAPLATOS) {
+            plus = costo.getPlusLavaplatos();
+        }
+
         return costo.getSueldoBase() + plus;
     }
+
 
 }

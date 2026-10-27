@@ -6,6 +6,8 @@ import com.oo2.tpgrupalhito2grupo08.services.ILiquidacionHaberesService;
 import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,7 +135,11 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
     }
 
 
-
+    @Override
+    @Transactional(readOnly = true)
+    public List<LiquidacionHaberes> listarFinalizadosxPersonal(Long idPersonal) {
+        return liquidacionRepository.listarFinalizadosPorPersonal(idPersonal, LocalDate.now());
+    }
 
 
 

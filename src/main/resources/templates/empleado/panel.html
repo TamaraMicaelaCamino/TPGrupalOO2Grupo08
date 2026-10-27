@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+  <div class="page-banner">
+    <h1>Panel del Empleado</h1>
+    <h2 class="fs-4 mb-2" th:text="${#strings.capitalize(#strings.toLowerCase(tipoPersonal))}">Tipo de personal</h2>
+    <p>Consultá tu información y tus recibos de sueldo</p>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-md-6 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Mi información</h5>
+          <p class="card-text text-muted">Ver los festivales y unidades de venta en las que trabajaste</p>
+          <a class="btn btn-outline-dark" th:href="@{/empleado/informacion}">Ver información</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Mis sueldos</h5>
+          <p class="card-text text-muted">Ver el sueldo recibido en cada festival y descargar el recibo en PDF</p>
+          <a class="btn btn-outline-dark" th:href="@{/empleado/sueldos}">Ver sueldos</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Mi Festival actual</h5>
+          <p class="card-text text-muted">Ver si tenés que trabajar en un festival activo y en qué unidad</p>
+          <a class="btn btn-outline-dark" th:href="@{/empleado/actualidad}">Ver actualidad </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" th:if="${esCajero}">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Cierre de caja</h5>
+          <p class="card-text text-muted">Cerrar la caja al finalizar el día</p>
+          <a class="btn btn-outline-dark" th:href="@{/empleado/caja}">Cerrar caja</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

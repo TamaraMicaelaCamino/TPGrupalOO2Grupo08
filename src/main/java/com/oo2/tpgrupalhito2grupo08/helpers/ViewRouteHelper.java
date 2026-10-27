@@ -30,6 +30,12 @@ public final static String ADMIN_UNIDADESVENTA = "administrador/unidades";
 public final static String ADMIN_RANKING = "administrador/ranking";
 public final static String ADMIN_MAYORCANON = "administrador/mayorcanon";
 
+//EMPLEADO
+
+public final static String EMPLEADO_PANEL= "empleado/panel";
+public final static String EMPLEADO_INFO = "empleado/informacion";
+public final static String EMPLEADO_ACTUAL = "empleado/actualidad";
+
 /**** Redirects ****/
 public final static String HOME_ROOT = "/";
 public final static String RESPONSABLE = "redirect:/responsable";
