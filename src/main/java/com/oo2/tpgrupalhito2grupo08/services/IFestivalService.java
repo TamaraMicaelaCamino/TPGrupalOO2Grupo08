@@ -13,5 +13,5 @@ public interface IFestivalService {
 
     Festival buscarFestival(Long idFestival);
 
-
+    List<FestivalDTO> traerActivos();
 }

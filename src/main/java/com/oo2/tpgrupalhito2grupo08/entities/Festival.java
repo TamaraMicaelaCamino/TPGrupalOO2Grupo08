@@ -5,6 +5,7 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,6 +32,9 @@ public class Festival {
     @Setter(AccessLevel.NONE)
     @Column(name="fechaFin", nullable = false)
     private LocalDate fechaFin;
+
+    @Column(nullable = false)
+    private boolean activo;
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -68,4 +72,15 @@ public class Festival {
          this.fechaInicio=fechaInicio;
          this.fechaFin=fechaFin;
     }
+
+    public long getDuracionEnDias() {
+
+        return ChronoUnit.DAYS.between(fechaInicio, fechaFin) + 1;
+    }
+
+    public double getPorcentajePorDias() {
+
+        return Math.ceil(getDuracionEnDias() / 15.0) * 0.5;
+    }
+
 }

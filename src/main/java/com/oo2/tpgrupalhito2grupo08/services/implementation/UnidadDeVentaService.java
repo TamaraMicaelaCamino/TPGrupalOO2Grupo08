@@ -174,7 +174,12 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         return unidadRepository.contarPorFestival(idFestival);
     }
 
-
+    @Override
+    @Transactional(readOnly = true)
+    public UnidadDeVenta obtenerUnidadPorId(Long id) {
+        return unidadRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("La unidad de venta no existe"));
+    }
 
 
 }

@@ -21,4 +21,6 @@ public class FestivalDTO {
 
     private LocalDate fechaFin;
 
+    private boolean activo;
+
 }

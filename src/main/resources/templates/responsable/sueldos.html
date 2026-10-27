@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Sueldos del Personal</h1>
+        <p th:text="'Unidad de Venta: ' + ${unidad}">Unidad de Venta</p>
+        <p th:if="${not #lists.isEmpty(sueldos)}"
+           th:text="'Festival: ' + ${sueldos[0].nombreFestival}">Festival</p>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-dark" th:href="@{/responsable}">Volver al panel</a>
+    </div>
+    <p class="text-muted">
+        El total a cobrar depende de la duración del festival. Por cada período de 15 días se
+        cobra el 50% del sueldo base más el plus de la categoría: hasta 15 días se cobra el 50%, de 16 a 30 días
+        el 100%, y si el festival dura más de 30 días se suma otro 50% por cada nuevo período de 15 días.
+        El cajero se le suma la antigüedad, donde 1 año equivale a $5.000.
+    </p>
+    <h3 class="fw-bold mb-3">Liquidación de Haberes</h3>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo Empleado</th>
+                <th>Días</th>
+                <th>Porcentaje</th>
+                <th>Antigüedad</th>
+                <th>Sueldo Base</th>
+                <th>Plus</th>
+                <th>Total a cobrar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${sueldos}">
+                <td th:text="${s.nombreCompleto}">Nombre</td>
+                <td th:text="${s.tipoPersonal}">Tipo</td>
+                <td th:text="${s.diasFestival}">0</td>
+                <td th:text="${#numbers.formatDecimal(s.factor, 1, 'POINT', 1, 'COMMA')} + ' (' + ${#numbers.formatDecimal(s.factor * 100, 1, 0)} + '%)'">0,5 (50%)</td>
+                <td th:text="${s.tipoPersonal == 'CAJERO'} ? ${s.antiguedad} + ' años' : '-'">0</td>
+                <td th:text="${#numbers.formatDecimal(s.sueldoBase, 1, 'POINT', 0, 'COMMA')}">0</td>
+                <td th:text="${s.tipoPersonal == 'CAJERO'}
+        ? ${#numbers.formatDecimal(s.adicional, 1, 'POINT', 0, 'COMMA')} + ' (' + ${s.antiguedad} + ' × 5.000)'
+        : ${#numbers.formatDecimal(s.adicional, 1, 'POINT', 0, 'COMMA')}">0</td>
+                <td><strong th:text="${#numbers.formatDecimal(s.total, 1, 'POINT', 0, 'COMMA')}">0</strong></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(sueldos)}">
+                <td colspan="8" class="text-center text-muted">No hay personal activo en la unidad.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
