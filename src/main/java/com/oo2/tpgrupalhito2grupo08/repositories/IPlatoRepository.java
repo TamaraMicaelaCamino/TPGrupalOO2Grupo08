@@ -18,4 +18,5 @@ public interface IPlatoRepository extends JpaRepository<Plato, Long> {
            OR u.idUnidadDeVenta = :idUnidadDeVenta)
     """)
     List<Plato> findByIdUnidadDeVentaAndResponsable_Username(@Param("idUnidadDeVenta") Long idUnidadDeVenta, @Param("userResponsable") String userResponsable);
-}
+
+    List<Plato> findByUnidadDeVenta_IdUnidadDeVenta(Long idUnidadDeVenta);}

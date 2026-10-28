@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3 mb-5">
+
+    <div class="page-banner">
+        <h1>Registrar pedido</h1>
+        <p>Seleccioná los platos y sus cantidades.</p>
+    </div>
+
+    <div class="alert alert-info"
+         th:if="${#lists.isEmpty(platos)}">
+        Tu unidad de venta no tiene platos disponibles.
+    </div>
+
+    <form th:unless="${#lists.isEmpty(platos)}"
+          th:action="@{/empleado/pedidos}"
+          th:object="${pedido}"
+          method="post">
+
+        <div class="alert alert-danger"
+             th:if="${#fields.hasErrors('*')}">
+            <ul class="mb-0">
+                <li th:each="error : ${#fields.errors('*')}"
+                    th:text="${error}">
+                </li>
+            </ul>
+        </div>
+
+        <div class="row mb-3"
+             th:each="detalle, fila : *{detalles}">
+
+            <div class="col-md-8">
+                <label class="d-block">
+                    Plato
+
+                    <select class="form-control"
+                            th:field="*{detalles[__${fila.index}__].idPlato}"
+                            required>
+
+                        <option value="">Seleccioná un plato</option>
+
+                        <option th:each="plato : ${platos}"
+                                th:value="${plato.idPlato}"
+                                th:text="${plato.nombre}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="col-md-4">
+                <label class="d-block">
+                    Cantidad
+
+                    <input type="number"
+                           class="form-control"
+                           th:field="*{detalles[__${fila.index}__].cantidad}"
+                           min="1"
+                           step="1"
+                           required>
+                </label>
+            </div>
+            <div class="col-md-2 d-flex align-items-end pb-2">
+                <button type="submit"
+                        class="btn btn-outline-danger"
+                        th:formaction="@{/empleado/pedidos/quitar-detalle}"
+                        name="indice"
+                        th:value="${fila.index}"
+                        formnovalidate>
+                    Quitar
+                </button>
+            </div>
+        </div>
+
+        <button type="submit"
+                class="btn btn-outline-dark ml-2"
+                th:formaction="@{/empleado/pedidos/agregar-detalle}"
+                formnovalidate>
+            Agregar otro plato
+        </button>
+        <button type="submit" class="btn btn-dark">
+            Registrar pedido
+        </button>
+
+        <a th:href="@{/}" class="btn btn-outline-dark ml-2">
+            Cancelar
+        </a>
+
+    </form>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

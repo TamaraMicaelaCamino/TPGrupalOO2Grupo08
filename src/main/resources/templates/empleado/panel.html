@@ -13,6 +13,8 @@
     <p>Consultá tu información y tus recibos de sueldo</p>
   </div>
 
+  <div class="alert alert-success" role="alert" th:if="${mensaje}" th:text="${mensaje}"></div>
+
   <div class="row mb-5">
     <div class="col-md-6 mb-3">
       <div class="card h-100">
@@ -38,6 +40,15 @@
           <h5 class="card-title">Mi Festival actual</h5>
           <p class="card-text text-muted">Ver si tenés que trabajar en un festival activo y en qué unidad</p>
           <a class="btn btn-outline-dark" th:href="@{/empleado/actualidad}">Ver actualidad </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3" th:if="${esCajero}">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Registrar Pedido</h5>
+          <p class="card-text text-muted">Registra un pedido a tu unidad de venta</p>
+          <a class="btn btn-outline-dark" th:href="@{/empleado/nuevoPedido}">Registrar Pedido</a>
         </div>
       </div>
     </div>

@@ -40,5 +40,8 @@ public class Pedido {
         return total;
     }
 
-
+    public void agregarDetalle(DetallePedido detalle) {
+        detalle.setPedido(this);
+        detalles.add(detalle);
+    }
 }

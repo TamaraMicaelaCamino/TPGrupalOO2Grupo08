@@ -20,6 +20,8 @@ public interface IPersonalRepository extends JpaRepository<Personal, Long> {
     """)
     List<Personal> findByIdUnidadDeVentaAndResponsable_Username(@Param("idUnidadDeVenta") Long idUnidadDeVenta,@Param("userResponsable") String userResponsable);
 
+    Optional<Personal> findByUsuario_UsernameAndActivoTrue(String username);
+
     Optional<Personal> findByUsuarioUsername(String username);
 
 }
