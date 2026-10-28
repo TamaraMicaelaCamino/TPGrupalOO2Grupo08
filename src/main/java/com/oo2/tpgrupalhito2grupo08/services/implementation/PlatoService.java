@@ -7,6 +7,7 @@ import com.oo2.tpgrupalhito2grupo08.repositories.IPlatoRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IPlatoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +16,34 @@ import java.util.List;
 public class PlatoService implements IPlatoService {
 
     private final IPlatoRepository platoRepository;
-    private final UnidadDeVentaService unidadDeVentaService;
     private final ModelMapper modelMapper;
 
-    public PlatoService(IPlatoRepository platoRepository, UnidadDeVentaService unidadDeVentaService, ModelMapper modelMapper){
+    public PlatoService(IPlatoRepository platoRepository, ModelMapper modelMapper){
         this.platoRepository = platoRepository;
-        this.unidadDeVentaService=unidadDeVentaService;
         this.modelMapper = modelMapper;
+    }
+
+    @Transactional
+    public Plato buscarPorId(Long idPlato){
+        return platoRepository.findById(idPlato)
+                .orElseThrow(
+                        ()-> new IllegalArgumentException("error, id erroneo"));
     }
 
     @Override
     public List<PlatoDTO> traerPlatoPorResponsableDeUnidad(Long idUnidadDeVenta, String userResponsable) {
-        List<PlatoDTO> platosDTO = new ArrayList<PlatoDTO>();
+        List<PlatoDTO> platosDTO = new ArrayList<>();
         for(Plato plato : platoRepository.findByIdUnidadDeVentaAndResponsable_Username(idUnidadDeVenta,userResponsable)){
+            PlatoDTO platoDTO = modelMapper.map(plato, PlatoDTO.class);
+            platosDTO.add(platoDTO);
+        }
+        return platosDTO;
+    }
+
+    @Override
+    public List<PlatoDTO> traerPlatoPorIdUnidadDeVenta(Long idUnidadDeVenta) {
+        List<PlatoDTO> platosDTO = new ArrayList<>();
+        for(Plato plato : platoRepository.findByUnidadDeVenta_IdUnidadDeVenta(idUnidadDeVenta)){
             PlatoDTO platoDTO = modelMapper.map(plato, PlatoDTO.class);
             platosDTO.add(platoDTO);
         }

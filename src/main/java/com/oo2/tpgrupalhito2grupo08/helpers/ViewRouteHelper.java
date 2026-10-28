@@ -16,10 +16,14 @@ public final static String REGISTRO = "registro/index";
 //RESPONSABLE
 public final static String RESPONSABLE_PANEL = "responsable/panel";
 public final static String RESPONSABLE_SUELDOS = "responsable/sueldos";
+public final static String RESPONSABLE_PEDIDOS = "responsable/pedidos";
 //PERSONAL
 public final static  String PERSONAL_LISTA= "responsable/lista_empleados";
 public final static String PERSONAL_ALTA = "responsable/form_empleados";
 
+//EMPLEADO
+public final static String EMPLEADO_ALTA_PEDIDO="empleado/pedidos";
+public final static String EMPLEADO_FORM_PEDIDO="empleado/nuevoPedido";
 //PLATOS
 public final static String PLATOS_LISTA = "responsable/lista_platos";
 public final static String PLATOS_ALTA = "responsable/form_platos";
