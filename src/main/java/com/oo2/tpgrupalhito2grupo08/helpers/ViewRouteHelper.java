@@ -17,6 +17,8 @@ public final static String REGISTRO = "registro/index";
 public final static String RESPONSABLE_PANEL = "responsable/panel";
 public final static String RESPONSABLE_SUELDOS = "responsable/sueldos";
 public final static String RESPONSABLE_PEDIDOS = "responsable/pedidos";
+public final static String RESPONSABLE_REPORTE = "responsable/reporte";
+
 //PERSONAL
 public final static  String PERSONAL_LISTA= "responsable/lista_empleados";
 public final static String PERSONAL_ALTA = "responsable/form_empleados";
