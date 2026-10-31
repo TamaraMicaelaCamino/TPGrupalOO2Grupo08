@@ -1,5 +1,6 @@
 package com.oo2.tpgrupalhito2grupo08.repositories;
 
+import com.oo2.tpgrupalhito2grupo08.entities.Festival;
 import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +26,6 @@ public interface IUnidadDeVentaRepository extends JpaRepository<UnidadDeVenta, L
     @Query("SELECT COUNT(u) FROM UnidadDeVenta u WHERE u.festival.idFestival = :idFestival")
     long contarPorFestival(@Param("idFestival") Long idFestival);
 
-
+    @Query("SELECT DISTINCT u.festival FROM UnidadDeVenta u WHERE u.responsable.username = :username")
+    List<Festival> festivalesPorResponsable(@Param("username") String username);
 }

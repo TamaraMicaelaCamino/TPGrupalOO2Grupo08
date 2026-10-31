@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Reporte de Recaudación</h1>
+        <p>Elegí un festival para ver su recaudación total.</p>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-dark" th:href="@{/responsable}">Volver al panel</a>
+    </div>
+
+    <form th:action="@{/responsable/reporte}" method="get" class="mb-3">
+        <div class="form-group">
+            <label for="idFestival">Festival</label>
+            <select id="idFestival" name="idFestival" class="form-control">
+                <option value="">Elegí un festival</option>
+                <option th:each="f : ${festivales}"
+                        th:value="${f.idFestival}"
+                        th:text="${f.nombre}"
+                        th:selected="${f.idFestival == idFestival}">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-dark">Consultar</button>
+    </form>
+
+    <div class="table-responsive mb-4" th:if="${reporte != null}">
+        <h4 th:text="${reporte.nombreFestival}">Festival</h4>
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>Unidad de venta</th>
+                <th class="text-right">Recaudación</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="nombre, i : ${reporte.unidades}">
+                <td th:text="${nombre}">Unidad</td>
+                <td class="text-right"
+                    th:text="'$ ' + ${#numbers.formatDecimal(reporte.recaudaciones[i.index], 1, 'POINT', 0, 'COMMA')}">0</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Total del festival</th>
+                <th class="text-right"
+                    th:text="'$ ' + ${#numbers.formatDecimal(reporte.recaudacionTotal, 1, 'POINT', 0, 'COMMA')}">0</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

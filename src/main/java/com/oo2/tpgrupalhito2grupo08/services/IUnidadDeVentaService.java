@@ -1,7 +1,10 @@
 package com.oo2.tpgrupalhito2grupo08.services;
 
 import com.oo2.tpgrupalhito2grupo08.dtos.*;
+import com.oo2.tpgrupalhito2grupo08.entities.Festival;
 import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -23,5 +26,9 @@ public interface IUnidadDeVentaService {
     List<ReporteMayoresCanonDTO> unidadesConMayorCanon(Long idFestival, int x);
 
     long cantidadDeUnidades(Long idFestival);
+
+    ReporteVentaDTO reporteRecaudacion(Long idFestival, String username);
+
+    List<Festival> festivalesDelResponsable(String username);
 
 }

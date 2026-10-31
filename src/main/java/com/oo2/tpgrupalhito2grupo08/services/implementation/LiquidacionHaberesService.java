@@ -29,6 +29,14 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
     public List<LiquidacionHaberesDTO> liquidarUnidad(Long idUnidad) {
         UnidadDeVenta unidad = unidadVentaService.obtenerUnidadPorId(idUnidad);
 
+        Festival festival = unidad.getFestival();
+        LocalDate fin = festival.getFechaFin();
+
+        if (fin == null || !fin.isBefore(LocalDate.now())) {
+            throw new IllegalStateException(
+                    "No se puede liquidar esta unidad: El " + festival.getNombre()
+                            + " no finalizó.");
+        }
         List<LiquidacionHaberesDTO> resultado = new ArrayList<>();
 
         for (Personal p : unidad.getPersonal()) {

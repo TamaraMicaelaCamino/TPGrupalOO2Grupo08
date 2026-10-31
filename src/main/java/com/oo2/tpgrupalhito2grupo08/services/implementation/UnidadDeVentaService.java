@@ -123,15 +123,9 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         List<RankingUnidadDTO> ranking = new ArrayList<>();
 
         for (UnidadDeVenta u : unidades) {
-            String tipo;
-            if (u instanceof FoodTruck) {
-                tipo = "Food Truck";
-            } else {
-                tipo = "Puesto Desarmable";
-            }
             double recaudacion = pedidoService.recaudacionPorUnidad(u.getIdUnidadDeVenta());
             ranking.add(new RankingUnidadDTO(u.getIdUnidadDeVenta(), u.getNombre(),
-                    tipo, u.getResponsable().getUsername(), recaudacion));
+                    u.getTipoUnidad(), u.getResponsable().getUsername(), recaudacion));
         }
 
         // Ordenar de mayor a menor recaudacion
@@ -181,6 +175,42 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
                 .orElseThrow(() -> new IllegalArgumentException("La unidad de venta no existe"));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public ReporteVentaDTO reporteRecaudacion(Long idFestival, String username) {
+        Festival festival = festivalService.buscarFestival(idFestival);
+        List<UnidadDeVenta> unidades = unidadRepository.buscarPorFestival(idFestival);
+
+        double total = 0;
+        List<String> nombres = new ArrayList<>();
+        List<Double> recaudaciones = new ArrayList<>();
+
+        for (UnidadDeVenta u : unidades) {
+            if (u.getResponsable().getUsername().equals(username)) {
+                double recaudacion = pedidoService.recaudacionPorUnidad(u.getIdUnidadDeVenta());
+                total += recaudacion;
+                nombres.add(u.getNombre());
+                recaudaciones.add(recaudacion);
+            }
+        }
+
+        if (nombres.isEmpty()) {
+            throw new IllegalArgumentException("No tenés unidades en este festival");
+        }
+
+        ReporteVentaDTO reporte = new ReporteVentaDTO();
+        reporte.setIdFestival(festival.getIdFestival());
+        reporte.setNombreFestival(festival.getNombre());
+        reporte.setRecaudacionTotal(total);
+        reporte.setUnidades(nombres);
+        reporte.setRecaudaciones(recaudaciones);
+        return reporte;
+    }
+
+    @Override
+    public List<Festival> festivalesDelResponsable(String username) {
+        return unidadRepository.festivalesPorResponsable(username);
+    }
 
 }
 
