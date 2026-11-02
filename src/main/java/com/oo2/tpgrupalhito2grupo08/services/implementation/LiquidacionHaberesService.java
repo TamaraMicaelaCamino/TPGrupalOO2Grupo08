@@ -1,5 +1,6 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
 import com.oo2.tpgrupalhito2grupo08.dtos.LiquidacionHaberesDTO;
+import com.oo2.tpgrupalhito2grupo08.dtos.ReciboSueldoPdfDTO;
 import com.oo2.tpgrupalhito2grupo08.entities.*;
 import com.oo2.tpgrupalhito2grupo08.repositories.ILiquidacionHaberesRepository;
 import com.oo2.tpgrupalhito2grupo08.services.ILiquidacionHaberesService;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service("liquidacionService")
 public class LiquidacionHaberesService implements ILiquidacionHaberesService{
@@ -147,6 +149,34 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
     @Transactional(readOnly = true)
     public List<LiquidacionHaberes> listarFinalizadosxPersonal(Long idPersonal) {
         return liquidacionRepository.listarFinalizadosPorPersonal(idPersonal, LocalDate.now());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ReciboSueldoPdfDTO armarRecibo(Long idLiquidacion, String username) {
+        Optional<LiquidacionHaberes> buscada = liquidacionRepository.findById(idLiquidacion);
+        if (buscada.isEmpty()) {
+            return null;
+        }
+
+        LiquidacionHaberes liq = buscada.get();
+        Personal p = liq.getPersonal();
+
+        // Solo el dueño de la liquidacion puede pedir su recibo
+        if (p.getUsuario() == null || !p.getUsuario().getUsername().equals(username)) {
+            return null;
+        }
+
+        UnidadDeVenta u = liq.getUnidadDeVenta();
+        Festival f = u.getFestival();
+
+        return ReciboSueldoPdfDTO.builder()
+                .liquidacion(convertirADTO(liq))
+                .dni(p.getDni())
+                .fechaIngreso(p.getFechaIngreso())
+                .tipoUnidad(u.getTipoUnidad())
+                .fechaFinFestival(f.getFechaFin())
+                .build();
     }
 
 

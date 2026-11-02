@@ -1,5 +1,8 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
+import com.oo2.tpgrupalhito2grupo08.components.ReciboSueldoPdf;
 import com.oo2.tpgrupalhito2grupo08.dtos.FestivalDTO;
+import com.oo2.tpgrupalhito2grupo08.dtos.LiquidacionHaberesDTO;
+import com.oo2.tpgrupalhito2grupo08.dtos.ReciboSueldoPdfDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.UnidadVentaFestivalDTO;
 import com.oo2.tpgrupalhito2grupo08.entities.LiquidacionHaberes;
 import com.oo2.tpgrupalhito2grupo08.entities.Personal;
@@ -20,13 +23,15 @@ public class EmpleadoService implements IEmpleadoService {
 
     private final IPersonalRepository personalRepository;
     private final ILiquidacionHaberesService liquidacionService;
+    private final ReciboSueldoPdf reciboPdf;
     private final ModelMapper modelMapper;
 
     public EmpleadoService(IPersonalRepository personalRepository,
-                           ILiquidacionHaberesService liquidacionHaberesService,
+                           ILiquidacionHaberesService liquidacionHaberesService, ReciboSueldoPdf reciboPdf,
                            ModelMapper modelMapper) {
         this.personalRepository = personalRepository;
         this.liquidacionService = liquidacionHaberesService;
+        this.reciboPdf = reciboPdf;
         this.modelMapper = modelMapper;
     }
 
@@ -95,7 +100,23 @@ public class EmpleadoService implements IEmpleadoService {
         return null;
     }
 
+    @Override
+    public List<LiquidacionHaberesDTO> miSueldo(String username) {
+        Optional<Personal> personal = personalRepository.findByUsuarioUsername(username);
+        if (personal.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return liquidacionService.traerPorPersonal(personal.get().getIdPersonal());
+    }
 
+    @Override
+    public byte[] generarRecibo(String username, Long idLiquidacion) {
+        ReciboSueldoPdfDTO recibo = liquidacionService.armarRecibo(idLiquidacion, username);
+        if (recibo == null) {
+            return null;
+        }
+        return reciboPdf.generar(recibo);
+    }
 
 
 }

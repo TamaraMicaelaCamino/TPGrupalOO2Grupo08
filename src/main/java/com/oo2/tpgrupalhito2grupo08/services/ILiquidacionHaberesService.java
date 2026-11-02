@@ -1,6 +1,7 @@
 package com.oo2.tpgrupalhito2grupo08.services;
 
 import com.oo2.tpgrupalhito2grupo08.dtos.LiquidacionHaberesDTO;
+import com.oo2.tpgrupalhito2grupo08.dtos.ReciboSueldoPdfDTO;
 import com.oo2.tpgrupalhito2grupo08.entities.LiquidacionHaberes;
 
 import java.util.List;
@@ -15,6 +16,9 @@ public interface ILiquidacionHaberesService {
 
     List<LiquidacionHaberesDTO> traerPorPersonal(Long idPersonal);
 
-
     List<LiquidacionHaberes> listarFinalizadosxPersonal(Long idPersonal);
+
+    ReciboSueldoPdfDTO armarRecibo(Long idLiquidacion, String username);
+
+
 }
