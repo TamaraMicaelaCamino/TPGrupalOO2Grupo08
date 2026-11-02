@@ -46,9 +46,30 @@
     <div class="col-md-6 mb-3" th:if="${esCajero}">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title">Registrar Pedido</h5>
-          <p class="card-text text-muted">Registra un pedido a tu unidad de venta</p>
-          <a class="btn btn-outline-dark" th:href="@{/empleado/nuevoPedido}">Registrar Pedido</a>
+          <h5 class="card-title">Registrar pedido</h5>
+
+          <p class="card-text text-muted">
+            Registrá un pedido para tu unidad de venta.
+          </p>
+
+          <a th:if="${puedeRegistrarPedidos}"
+             class="btn btn-outline-dark"
+             th:href="@{/empleado/nuevoPedido}">
+            Registrar pedido
+          </a>
+
+          <button th:unless="${puedeRegistrarPedidos}"
+                  type="button"
+                  class="btn btn-outline-dark"
+                  disabled>
+            Registrar pedido
+          </button>
+
+          <p th:unless="${puedeRegistrarPedidos}"
+             class="text-muted mt-2 mb-0">
+            No tenés una unidad de venta con un festival
+            vigente.
+          </p>
         </div>
       </div>
     </div>
