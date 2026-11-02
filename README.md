@@ -18,3 +18,13 @@
 
 ## Casos de uso implementados y responsables: 
 | Registro de Unidad de Venta + Responsable | Tamara Camino | [PR #11](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/11) |
+| Consultar Unidade de Venta de un festival | Tamara Camino | [PR #14](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/14) |
+| Consultar Ranking de Unidades de Venta | Tamara Camino | [PR #15](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/15) |
+| Consultar Unidades de Venta mayor canon | Tamara Camino | [PR #16](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/16) |
+| Liquidacion de Haberes| Tamara Camino | [PR #19](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/19) |
+| Consultar Festival finalizado y activo | Tamara Camino | [PR #24](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/24) |
+| Reporte de Recaudacion Total por Festival | Tamara Camino | [PR #26](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/26) |
+
+
+
+
