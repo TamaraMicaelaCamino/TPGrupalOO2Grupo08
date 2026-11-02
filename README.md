@@ -51,7 +51,7 @@ Las tablas se generan solas (`ddl-auto: update`), no hay que correr ningún scri
 | Variable        | Valor                                                                                                                                  |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `DB_URL`        | `jdbc:mysql://localhost:3306/epicentro_gourmet?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC` |
-| `DB_USER`       | tu usuario de MySQL (ej: `root`)                                                                                                       |
+| `DB_USER`       | tu usuario de MySQL                                                                                                      |
 | `DB_PASSWORD`   | tu clave de MySQL                                                                                                                      |
 | `MAIL_USERNAME` | email remitente (cuenta Gmail)                                                                                                         |
 | `MAIL_PASSWORD` | contraseña de aplicación de Gmail (no la contraseña normal)                                                                            |
