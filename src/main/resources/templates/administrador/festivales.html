@@ -28,6 +28,7 @@
                 <th>Temporada</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
+                <th>Estado</th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +37,10 @@
                 <td th:text="${f.temporada}"></td>
                 <td th:text="${#temporals.format(f.fechaInicio, 'dd/MM/yyyy')}"></td>
                 <td th:text="${#temporals.format(f.fechaFin, 'dd/MM/yyyy')}"></td>
+                <td>
+                    <span class="badge badge-success" th:if="${f.activo}">Activo</span>
+                    <span class="badge badge-danger" th:unless="${f.activo}">Inactivo</span>
+                </td>
             </tr>
             </tbody>
         </table>
