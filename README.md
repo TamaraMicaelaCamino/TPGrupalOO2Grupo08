@@ -9,6 +9,70 @@
 
 
 ## Pasos para correr la aplicación(crear bd, variables de entorno, etc). 
+Aplicación web desarrollada con Spring Boot 4.1.1, Spring Security, Thymeleaf, JPA/Hibernate y MySQL.
+
+## Requisitos previos
+
+- **JDK 17** o superior (versión definida en el `pom.xml`)
+- **Maven** (o usar el wrapper `./mvnw` incluido en el proyecto)
+- **MySQL 8** corriendo en `localhost:3306`
+- **IntelliJ IDEA** (recomendado)
+- Una cuenta de **Gmail** con *contraseña de aplicación* (para el envío de mails)
+
+## 1. Clonar el repositorio
+
+```bash
+git clone <https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08.git>
+cd tpgrupalhito2grupo08
+```
+
+## 2. Crear la base de datos
+
+La base de datos se llama `epicentro_gourmet`. Hay dos formas de crearla:
+
+**Opción A (automática):** la URL de conexión incluye `createDatabaseIfNotExist=true`, por lo que Spring la crea al iniciar la aplicación si no existe. Solo hace falta que el servidor MySQL esté levantado y que el usuario tenga permisos para crear bases de datos.
+
+**Opción B (manual):** desde MySQL Workbench o la consola:
+
+```sql
+CREATE DATABASE IF NOT EXISTS epicentro_gourmet;
+```
+
+Las tablas se generan solas (`ddl-auto: update`), no hay que correr ningún script.
+
+## 3. Configurar las variables de entorno
+### En IntelliJ IDEA
+
+1. Ir a **Run → Edit Configurations…**
+2. Seleccionar **Tpgrupalhito2grupo08Application**
+3. Click en **Modify options → Environment variables**
+4. Agregar las siguientes variables (separadas por `;`):
+
+| Variable        | Valor                                                                                                                                  |
+|-----------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `DB_URL`        | `jdbc:mysql://localhost:3306/epicentro_gourmet?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC` |
+| `DB_USER`       | tu usuario de MySQL (ej: `root`)                                                                                                       |
+| `DB_PASSWORD`   | tu clave de MySQL                                                                                                                      |
+| `MAIL_USERNAME` | email remitente (cuenta Gmail)                                                                                                         |
+| `MAIL_PASSWORD` | contraseña de aplicación de Gmail (no la contraseña normal)                                                                            |
+
+## 4. Obtener la contraseña de aplicación de Gmail
+
+1. Activar la **verificación en dos pasos** en la cuenta de Google.
+2. Ir a <https://myaccount.google.com/apppasswords>.
+3. Crear una contraseña de aplicación (ej: nombre "Epicentro Gourmet").
+4. Copiar los 16 caracteres generados y usarlos como `MAIL_PASSWORD` (sin espacios).
+
+## 5. Ejecutar la aplicación
+
+- **Desde IntelliJ:** abrir `Tpgrupalhito2grupo08Application` y presionar **Run** ▶️.
+- **Desde la terminal:** `./mvnw spring-boot:run`
+
+Cuando en la consola aparezca `Started Tpgrupalhito2grupo08Application`, abrir en el navegador:
+
+```
+http://localhost:8080
+```
 
 
 
