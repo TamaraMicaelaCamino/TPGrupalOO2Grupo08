@@ -10,6 +10,7 @@ public interface IEmpleadoService {
 
     boolean esCajero(String username);
 
+    boolean puedeRegistrarPedidos(String username);
 
     UnidadVentaFestivalDTO miTrabajoActual(String username);
 
