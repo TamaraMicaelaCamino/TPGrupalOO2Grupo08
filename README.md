@@ -26,19 +26,17 @@ git clone <https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08.git>
 cd tpgrupalhito2grupo08
 ```
 
-## 2. Crear la base de datos
+2. Crear la base de datos y cargar el script
 
-La base de datos se llama `epicentro_gourmet`. Hay dos formas de crearla:
+Si la base epicentro_gourmet no existe, hay que crearla primero y después cargar el script SQL del proyecto (<RUTA_DEL_SCRIPT>/<NOMBRE_DEL_SCRIPT>.sql) sobre esa base.
 
-**Opción A (automática):** la URL de conexión incluye `createDatabaseIfNotExist=true`, por lo que Spring la crea al iniciar la aplicación si no existe. Solo hace falta que el servidor MySQL esté levantado y que el usuario tenga permisos para crear bases de datos.
-
-**Opción B (manual):** desde MySQL Workbench o la consola:
-
-```sql
-CREATE DATABASE IF NOT EXISTS epicentro_gourmet;
-```
-
-Las tablas se generan solas (`ddl-auto: update`), no hay que correr ningún script.
+Opción A: desde MySQL Workbench
+Conectarse al servidor local (localhost:3306).
+Crear la base (si no existe):
+sql
+   CREATE DATABASE IF NOT EXISTS epicentro_gourmet;
+   USE epicentro_gourmet;
+Ir a File → Open SQL Script…, elegir el script del proyecto y ejecutarlo con el botón del rayo ⚡ asegurándose de que la base epicentro_gourmet esté seleccionada.
 
 ## 3. Configurar las variables de entorno
 ### En IntelliJ IDEA
