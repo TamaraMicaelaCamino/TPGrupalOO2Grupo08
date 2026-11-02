@@ -28,6 +28,8 @@ public class EmpleadoController {
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.EMPLEADO_PANEL);
         mAV.addObject(CAJERO_ATTR, empleadoService.esCajero(principal.getName()));
         mAV.addObject(TIPO_ATTR, empleadoService.obtenerTipoPersonal(principal.getName()));
+        mAV.addObject("puedeRegistrarPedidos", empleadoService.puedeRegistrarPedidos(principal.getName())
+        );
         return mAV;
     }
 

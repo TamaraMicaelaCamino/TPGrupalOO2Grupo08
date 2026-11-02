@@ -1,6 +1,7 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
 import com.oo2.tpgrupalhito2grupo08.dtos.FestivalDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.UnidadVentaFestivalDTO;
+import com.oo2.tpgrupalhito2grupo08.entities.Cajero;
 import com.oo2.tpgrupalhito2grupo08.entities.LiquidacionHaberes;
 import com.oo2.tpgrupalhito2grupo08.entities.Personal;
 import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
@@ -59,7 +60,7 @@ public class EmpleadoService implements IEmpleadoService {
         Personal personal = buscarPersonalActivo(username);
         UnidadDeVenta unidad = personal.getUnidadDeVenta();
 
-        if (unidad == null || !unidad.getFestival().estaEnCurso(LocalDate.now())) {
+        if (!tieneFestivalVigente(unidad)) {
             return null;
         }
         return toDTO(unidad);
@@ -95,7 +96,19 @@ public class EmpleadoService implements IEmpleadoService {
         return null;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean puedeRegistrarPedidos(String username) {
+        Personal personal = buscarPersonalActivo(username);
 
+        return personal instanceof Cajero
+                && tieneFestivalVigente(personal.getUnidadDeVenta());
+    }
 
+    private boolean tieneFestivalVigente(UnidadDeVenta unidad) {
+        return unidad != null
+                && unidad.getFestival() != null
+                && unidad.getFestival().estaEnCurso(LocalDate.now());
+    }
 
 }
