@@ -25,18 +25,20 @@ Aplicación web desarrollada con Spring Boot 4.1.1, Spring Security, Thymeleaf, 
 git clone <https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08.git>
 cd tpgrupalhito2grupo08
 ```
-
-2. Crear la base de datos y cargar el script
-
-Si la base epicentro_gourmet no existe, hay que crearla primero y después cargar el script SQL del proyecto (<RUTA_DEL_SCRIPT>/<NOMBRE_DEL_SCRIPT>.sql) sobre esa base.
-
-Opción A: desde MySQL Workbench
-Conectarse al servidor local (localhost:3306).
-Crear la base (si no existe):
-sql
+## 2. Crear la base de datos y cargar el script
+ 
+Si la base `epicentro_gourmet` no existe, hay que crearla primero y después cargar el script SQL del proyecto (`<RUTA_DEL_SCRIPT>/<NOMBRE_DEL_SCRIPT>.sql`) sobre esa base.
+ 
+### Opción A: desde MySQL Workbench
+ 
+1. Conectarse al servidor local (`localhost:3306`).
+2. Crear la base (si no existe):
+```sql
    CREATE DATABASE IF NOT EXISTS epicentro_gourmet;
    USE epicentro_gourmet;
-Ir a File → Open SQL Script…, elegir el script del proyecto y ejecutarlo con el botón del rayo ⚡ asegurándose de que la base epicentro_gourmet esté seleccionada.
+```
+3. Ir a **File → Open SQL Script…**, elegir el script del proyecto y ejecutarlo con el botón del rayo ⚡ asegurándose de que la base `epicentro_gourmet` esté seleccionada.
+
 
 ## 3. Configurar las variables de entorno
 ### En IntelliJ IDEA
