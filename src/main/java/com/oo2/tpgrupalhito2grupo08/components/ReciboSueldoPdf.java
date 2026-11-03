@@ -83,8 +83,9 @@ public class ReciboSueldoPdf {
         agregarCampo(tabla, String.valueOf(fechaFin.getYear()), "AÑO", 2);
 
 
-        agregarCampo(tabla, recibo.getFechaIngreso().format(FECHA), "FECHA DE INGRESO", 6);
-        agregarCampo(tabla, fechaFin.format(FECHA), "FECHA DE FIN", 6);
+        agregarCampo(tabla, recibo.getFechaIngreso().format(FECHA), "FECHA DE INGRESO DEL EMPLEADO", 4);
+        agregarCampo(tabla, recibo.getFechaInicioFestival().format(FECHA), "INICIO DEL FESTIVAL", 4);
+        agregarCampo(tabla, fechaFin.format(FECHA), "FIN DEL FESTIVAL", 4);
 
 
         agregarCampo(tabla, recibo.getTipoUnidad(), "TIPO UNIDAD DE VENTA", 4);
@@ -125,9 +126,9 @@ public class ReciboSueldoPdf {
             String detalle = "PLUS POR ANTIGÜEDAD";
             if (d.getAntiguedad() > 0) {
                 double valorPorAnio = d.getAdicional() / d.getAntiguedad();
-                detalle = "PLUS POR ANTIGÜEDAD (" + dinero(valorPorAnio) + " por año)";
+                detalle = "PLUS POR ANTIGÜEDAD (" + dinero(valorPorAnio) + " por año, al fin del festival)";
             }
-            agregarFila(tabla, detalle, String.valueOf(d.getAntiguedad()), dinero(d.getAdicional()), NORMAL);
+            agregarFila(tabla, detalle, d.getAntiguedad() + " año(s)", dinero(d.getAdicional()), NORMAL);
         } else {
             agregarFila(tabla, "PLUS POR CATEGORÍA (" + d.getTipoPersonal() + ")", "1",
                     dinero(d.getAdicional()), NORMAL);

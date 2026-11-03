@@ -175,6 +175,7 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
                 .dni(p.getDni())
                 .fechaIngreso(p.getFechaIngreso())
                 .tipoUnidad(u.getTipoUnidad())
+                .fechaInicioFestival(f.getFechaInicio())
                 .fechaFinFestival(f.getFechaFin())
                 .build();
     }

@@ -17,10 +17,8 @@ public interface IEmpleadoService {
 
     String obtenerTipoPersonal(String username);
 
-
     List<LiquidacionHaberesDTO> miSueldo(String username);
 
     byte[] generarRecibo(String username, Long idLiquidacion);
-
 
 }
