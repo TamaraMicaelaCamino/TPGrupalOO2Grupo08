@@ -162,7 +162,7 @@ public class LiquidacionHaberesService implements ILiquidacionHaberesService{
         LiquidacionHaberes liq = buscada.get();
         Personal p = liq.getPersonal();
 
-        // Solo el dueño de la liquidacion puede pedir su recibo
+        // Solo el empleado de la liquidacion puede pedir su recibo
         if (p.getUsuario() == null || !p.getUsuario().getUsername().equals(username)) {
             return null;
         }
