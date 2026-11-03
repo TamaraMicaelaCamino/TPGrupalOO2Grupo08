@@ -6,7 +6,7 @@ spring:
   # NO modificar este archivo: cada integrante define sus propias variables de entorno.
   # En IntelliJ: run -> edit configurations -> Tpgrupalhito2grupo08Application -> Modify options -> Environment variables -> y agregar estas 3 variables:
   # Name: DB_URL       Value: jdbc:mysql://localhost:3306/epicentro_gourmet?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-  # Name: DB_USER      Value: root
+  # Name: DB_USER      Value: tu_usuario
   # Name: DB_PASSWORD  Value: tu_clave
 
   datasource:

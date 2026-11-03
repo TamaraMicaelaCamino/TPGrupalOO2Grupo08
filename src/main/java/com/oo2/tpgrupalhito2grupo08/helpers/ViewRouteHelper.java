@@ -41,7 +41,7 @@ public final static String ADMIN_MAYORCANON = "administrador/mayorcanon";
 public final static String EMPLEADO_PANEL= "empleado/panel";
 public final static String EMPLEADO_INFO = "empleado/informacion";
 public final static String EMPLEADO_ACTUAL = "empleado/actualidad";
-
+public static final String EMPLEADO_SUELDOS = "empleado/sueldos";
 /**** Redirects ****/
 public final static String HOME_ROOT = "/";
 public final static String RESPONSABLE = "redirect:/responsable";

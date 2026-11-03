@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Mi sueldo</h1>
+        <p>Sueldo recibido en un festival</p>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-dark" th:href="@{/empleado}">Volver al panel</a>
+    </div>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>Festival</th>
+                <th>Unidad de Venta</th>
+                <th>Total cobrado</th>
+                <th>Recibo de Sueldo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${sueldos}">
+                <td th:text="${s.nombreFestival}">Festival</td>
+                <td th:text="${s.nombreUnidad}">Unidad</td>
+                <td><strong th:text="${#numbers.formatDecimal(s.total, 1, 'POINT', 0, 'COMMA')}">0</strong></td>
+                <td>
+                    <a class="btn btn-sm btn-outline-dark"
+                       th:href="@{/empleado/sueldos/{id}/recibo(id=${s.idLiquidacion})}">Descargar PDF</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(sueldos)}">
+                <td colspan="4" class="text-center text-muted">Todavía no tenés sueldo liquidado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

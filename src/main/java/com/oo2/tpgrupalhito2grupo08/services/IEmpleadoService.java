@@ -1,5 +1,6 @@
 package com.oo2.tpgrupalhito2grupo08.services;
 
+import com.oo2.tpgrupalhito2grupo08.dtos.LiquidacionHaberesDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.UnidadVentaFestivalDTO;
 
 import java.util.List;
@@ -15,5 +16,11 @@ public interface IEmpleadoService {
     UnidadVentaFestivalDTO miTrabajoActual(String username);
 
     String obtenerTipoPersonal(String username);
+
+
+    List<LiquidacionHaberesDTO> miSueldo(String username);
+
+    byte[] generarRecibo(String username, Long idLiquidacion);
+
 
 }
