@@ -11,6 +11,7 @@ public class ReciboSueldoPdfDTO {
     private LiquidacionHaberesDTO liquidacion;
     private long dni;
     private LocalDate fechaIngreso;
+    private LocalDate fechaInicioFestival;
     private LocalDate fechaFinFestival;
     private String tipoUnidad;
 
