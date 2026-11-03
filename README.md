@@ -102,6 +102,9 @@ http://localhost:8080
 - **Reporte de Recaudación Total por Festival** — Tamara Camino  
   [PR #26](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/26)
 
+- **Generar PDF recibo de sueldo** — Tamara Camino  
+  [PR #30](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/30)
+  
 
 
 
