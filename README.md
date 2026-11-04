@@ -84,19 +84,19 @@ http://localhost:8080
 - **Registro de Unidad de Venta + Responsable** — Tamara Camino  
   [PR #11](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/11)
 
-- **Consultar Unidad de Venta de un festival** — Tamara Camino  
+- **Consultar Unidadades de Venta de un festival** — Tamara Camino  
   [PR #14](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/14)
 
-- **Consultar Ranking de Unidades de Venta** — Tamara Camino  
+- **Consultar Ranking de Unidades de Venta por Recaudación** — Tamara Camino  
   [PR #15](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/15)
 
-- **Consultar Unidades de Venta mayor canon** — Tamara Camino  
+- **Consultar Unidades de Venta con mayor canon** — Tamara Camino  
   [PR #16](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/16)
 
 - **Liquidación de Haberes** — Tamara Camino  
   [PR #19](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/19)
 
-- **Consultar Festival finalizado y activo** — Tamara Camino  
+- **Consultar Festival finalizado y activo con sus unidades de venta** — Tamara Camino  
   [PR #24](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/24)
 
 - **Reporte de Recaudación Total por Festival** — Tamara Camino  
