@@ -29,6 +29,7 @@ public final static String EMPLEADO_INFO = "empleado/informacion";
 public final static String EMPLEADO_ACTUAL = "empleado/actualidad";
 public final static String EMPLEADO_FORM_PEDIDO="empleado/nuevoPedido";
 public final static String EMPLEADO_CAJA="empleado/caja";
+public static final String EMPLEADO_SUELDOS = "empleado/sueldos";
 //PLATOS
 public final static String PLATOS_LISTA = "responsable/lista_platos";
 //ADMINISTRADOR
@@ -37,8 +38,6 @@ public final static String ADMIN_FESTIVALES = "administrador/festivales";
 public final static String ADMIN_UNIDADESVENTA = "administrador/unidades";
 public final static String ADMIN_RANKING = "administrador/ranking";
 public final static String ADMIN_MAYORCANON = "administrador/mayorcanon";
-
-
 
 /**** Redirects ****/
 public final static String HOME_ROOT = "/";

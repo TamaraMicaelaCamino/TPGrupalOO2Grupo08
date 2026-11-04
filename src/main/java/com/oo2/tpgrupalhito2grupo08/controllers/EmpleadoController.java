@@ -1,9 +1,11 @@
 package com.oo2.tpgrupalhito2grupo08.controllers;
 import com.oo2.tpgrupalhito2grupo08.helpers.ViewRouteHelper;
 import com.oo2.tpgrupalhito2grupo08.services.IEmpleadoService;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
@@ -46,6 +48,31 @@ public class EmpleadoController {
         mAV.addObject(ACTUAL_ATTR, empleadoService.miTrabajoActual(principal.getName()));
         return mAV;
     }
+
+    @GetMapping("/sueldos")
+    public ModelAndView misSueldos(Principal principal) {
+        ModelAndView mAV = new ModelAndView(ViewRouteHelper.EMPLEADO_SUELDOS);
+        mAV.addObject("sueldos", empleadoService.miSueldo(principal.getName()));
+        return mAV;
+    }
+
+    @GetMapping("/sueldos/{idLiquidacion}/recibo")
+    public ResponseEntity<byte[]> descargarRecibo(@PathVariable Long idLiquidacion, Principal principal) {
+        byte[] pdf = empleadoService.generarRecibo(principal.getName(), idLiquidacion);
+
+        if (pdf == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("recibo-sueldo-" + idLiquidacion + ".pdf").build());
+
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+    }
+
+
 
 
 

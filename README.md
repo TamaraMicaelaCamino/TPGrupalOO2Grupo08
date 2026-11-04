@@ -5,7 +5,7 @@
 
 ## Integrantes
 - **Lautaro Leiva Szapajko - szapajko**
-- **Tamara Micaela Camino - TamaraCamino**
+- **Tamara Camino - TamaraMicaelaCamino**
 
 
 ## Pasos para correr la aplicación(crear bd, variables de entorno, etc). 
@@ -77,7 +77,7 @@ http://localhost:8080
 
 
 ## Diagrama de Clases:
-<img width="2528" height="1922" alt="diagrama (2)" src="https://github.com/user-attachments/assets/5b4d48a3-7fb3-4920-ac5d-88f4adcb59c5" />
+<img width="2033" height="1517" alt="EPICENTRO_GOURMET_DIAGRAMA drawio" src="https://github.com/user-attachments/assets/4cd8eb34-4d32-434f-a671-7461b4d72634" />
 
 ## Casos de uso implementados y responsables:
 
@@ -102,6 +102,9 @@ http://localhost:8080
 - **Reporte de Recaudación Total por Festival** — Tamara Camino  
   [PR #26](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/26)
 
+- **Generar PDF recibo de sueldo** — Tamara Camino  
+  [PR #30](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/30)
+  
 
 
 

@@ -17,10 +17,22 @@ public interface ILiquidacionHaberesRepository extends JpaRepository<Liquidacion
     @Query("SELECT l FROM LiquidacionHaberes l WHERE l.personal = :personal AND l.unidadDeVenta = :unidad")
     Optional<LiquidacionHaberes> buscarPersonalYUnidad(@Param("personal") Personal personal,@Param("unidad") UnidadDeVenta unidad);
 
-    @Query("SELECT l FROM LiquidacionHaberes l WHERE l.unidadDeVenta.idUnidadDeVenta = :idUnidad")
+    @Query("""
+    SELECT l FROM LiquidacionHaberes l
+    JOIN FETCH l.personal p
+    JOIN FETCH l.unidadDeVenta u
+    JOIN FETCH u.festival f
+    WHERE u.idUnidadDeVenta = :idUnidad
+""")
     List<LiquidacionHaberes> listarPorUnidad(@Param("idUnidad") Long idUnidad);
 
-    @Query("SELECT l FROM LiquidacionHaberes l WHERE l.personal.idPersonal = :idPersonal")
+    @Query("""
+    SELECT l FROM LiquidacionHaberes l
+    JOIN FETCH l.personal p
+    JOIN FETCH l.unidadDeVenta u
+    JOIN FETCH u.festival f
+    WHERE p.idPersonal = :idPersonal
+""")
     List<LiquidacionHaberes> listarPorPersonal(@Param("idPersonal") Long idPersonal);
 
     @Query("""

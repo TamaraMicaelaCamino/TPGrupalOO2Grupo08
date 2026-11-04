@@ -1,5 +1,8 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
+import com.oo2.tpgrupalhito2grupo08.components.ReciboSueldoPdf;
 import com.oo2.tpgrupalhito2grupo08.dtos.FestivalDTO;
+import com.oo2.tpgrupalhito2grupo08.dtos.LiquidacionHaberesDTO;
+import com.oo2.tpgrupalhito2grupo08.dtos.ReciboSueldoPdfDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.UnidadVentaFestivalDTO;
 import com.oo2.tpgrupalhito2grupo08.entities.Cajero;
 import com.oo2.tpgrupalhito2grupo08.entities.LiquidacionHaberes;
@@ -22,16 +25,18 @@ public class EmpleadoService implements IEmpleadoService {
     private final IPersonalRepository personalRepository;
     private final PersonalService personalService;
     private final ILiquidacionHaberesService liquidacionService;
-    private final CierreCajaService cierreCajaService;
+    private final CierreCajaService cierreCajaService;                      
+    private final ReciboSueldoPdf reciboPdf;
     private final ModelMapper modelMapper;
 
     public EmpleadoService(IPersonalRepository personalRepository, PersonalService personalService,
-                           ILiquidacionHaberesService liquidacionHaberesService, CierreCajaService cierreCajaService,
+                           ILiquidacionHaberesService liquidacionHaberesService, ReciboSueldoPdf reciboPdf, CierreCajaService cierreCajaService,
                            ModelMapper modelMapper) {
         this.personalRepository = personalRepository;
         this.personalService = personalService;
         this.liquidacionService = liquidacionHaberesService;
         this.cierreCajaService = cierreCajaService;
+        this.reciboPdf = reciboPdf;
         this.modelMapper = modelMapper;
     }
 
@@ -95,6 +100,23 @@ public class EmpleadoService implements IEmpleadoService {
         Personal personal = personalService.buscarPersonalActivo(username);
 
         return personal instanceof Cajero && tieneFestivalVigente(personal.getUnidadDeVenta()) && cajaAbierta(username);
+    }
+    @Override
+    public List<LiquidacionHaberesDTO> miSueldo(String username) {
+        Optional<Personal> personal = personalRepository.findByUsuarioUsername(username);
+        if (personal.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return liquidacionService.traerPorPersonal(personal.get().getIdPersonal());
+    }
+
+    @Override
+    public byte[] generarRecibo(String username, Long idLiquidacion) {
+        ReciboSueldoPdfDTO recibo = liquidacionService.armarRecibo(idLiquidacion, username);
+        if (recibo == null) {
+            return null;
+        }
+        return reciboPdf.generar(recibo);
     }
 
     private boolean tieneFestivalVigente(UnidadDeVenta unidad) {
