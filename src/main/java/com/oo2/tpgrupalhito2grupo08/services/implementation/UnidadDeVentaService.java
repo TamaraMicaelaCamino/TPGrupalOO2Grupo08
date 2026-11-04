@@ -1,9 +1,11 @@
 package com.oo2.tpgrupalhito2grupo08.services.implementation;
 import com.oo2.tpgrupalhito2grupo08.dtos.*;
 import com.oo2.tpgrupalhito2grupo08.entities.*;
+import com.oo2.tpgrupalhito2grupo08.repositories.IRolRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IFestivalService;
 import com.oo2.tpgrupalhito2grupo08.services.IPedidoService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.oo2.tpgrupalhito2grupo08.entities.enums.RolEnum;
@@ -11,6 +13,7 @@ import com.oo2.tpgrupalhito2grupo08.repositories.IUnidadDeVentaRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
 import com.oo2.tpgrupalhito2grupo08.services.IUsuarioService;
 
+import java.security.Principal;
 import java.util.*;
 
 @Service("unidadDeVentaService")
@@ -18,14 +21,12 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
 
     private final IUnidadDeVentaRepository unidadRepository;
     private final IFestivalService festivalService;
-    private final IUsuarioService usuarioService;
+    private final UsuarioService usuarioService;
     private final ModelMapper modelMapper;
     private final IPedidoService pedidoService;
-    private IllegalArgumentException illegalArgumentException;
 
-    public UnidadDeVentaService(IUnidadDeVentaRepository unidadRepository,
-                                IFestivalService festivalService,
-                                IUsuarioService usuarioService,IPedidoService pedidosService,
+    public UnidadDeVentaService(IUnidadDeVentaRepository unidadRepository, IFestivalService festivalService,
+                                UsuarioService usuarioService, IPedidoService pedidosService,
                                 ModelMapper modelMapper) {
         this.unidadRepository = unidadRepository;
         this.festivalService = festivalService;
@@ -59,6 +60,33 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
         Festival festival = festivalService.buscarFestival(dto.getIdFestival());
         Usuario responsable = usuarioService.crearUsuario(dto.getUsuario(), RolEnum.RESPONSABLE);
 
+        PuestoDesarmable unidad = modelMapper.map(dto, PuestoDesarmable.class);
+        unidad.setFestival(festival);
+        unidad.setResponsable(responsable);
+        unidadRepository.save(unidad);
+    }
+
+    @Override
+    @Transactional
+    public void registrarFoodTruckResponsable(FoodTruckResponsableDTO dto, String username) {
+        validarCodigo(dto.getCodigo());
+        validarPatente(dto.getPatente());
+
+        Festival festival = festivalService.buscarFestival(dto.getIdFestival());
+        Usuario responsable = usuarioService.buscarPorUsername(username);
+        FoodTruck unidad = modelMapper.map(dto, FoodTruck.class);
+        unidad.setFestival(festival);
+        unidad.setResponsable(responsable);
+        unidadRepository.save(unidad);
+    }
+
+    @Override
+    @Transactional
+    public void registrarPuestoDesarmableResponsable(PuestoDesarmableResponsableDTO dto, String username) {
+        validarCodigo(dto.getCodigo());
+
+        Festival festival = festivalService.buscarFestival(dto.getIdFestival());
+        Usuario responsable = usuarioService.buscarPorUsername(username);
         PuestoDesarmable unidad = modelMapper.map(dto, PuestoDesarmable.class);
         unidad.setFestival(festival);
         unidad.setResponsable(responsable);

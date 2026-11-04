@@ -53,6 +53,26 @@
       </div>
     </div>
   </div>
+
+  <div class="mb-4" sec:authorize="hasRole('RESPONSABLE')">
+    <div class="col-md-20 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Opciones del responsable</h5>
+
+          <p class="card-text text-muted">
+            Accede al registro de una unidad de venta
+          </p>
+
+          <a class="btn btn-outline-dark"
+             th:href="@{/responsable/registro_unidad}">
+            Registrar nueva unidad
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h2 class="mb-3">Festivales</h2>
 
   <div class="alert alert-light border" th:if="${#lists.isEmpty(festivales)}">
