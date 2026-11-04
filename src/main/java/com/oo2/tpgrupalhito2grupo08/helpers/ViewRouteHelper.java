@@ -24,11 +24,14 @@ public final static  String PERSONAL_LISTA= "responsable/lista_empleados";
 public final static String PERSONAL_ALTA = "responsable/form_empleados";
 
 //EMPLEADO
-public final static String EMPLEADO_ALTA_PEDIDO="empleado/pedidos";
+public final static String EMPLEADO_PANEL= "empleado/panel";
+public final static String EMPLEADO_INFO = "empleado/informacion";
+public final static String EMPLEADO_ACTUAL = "empleado/actualidad";
 public final static String EMPLEADO_FORM_PEDIDO="empleado/nuevoPedido";
+public final static String EMPLEADO_CAJA="empleado/caja";
+public static final String EMPLEADO_SUELDOS = "empleado/sueldos";
 //PLATOS
 public final static String PLATOS_LISTA = "responsable/lista_platos";
-public final static String PLATOS_ALTA = "responsable/form_platos";
 //ADMINISTRADOR
 public final static String ADMIN_INDEX = "administrador/inicio";
 public final static String ADMIN_FESTIVALES = "administrador/festivales";
@@ -36,12 +39,6 @@ public final static String ADMIN_UNIDADESVENTA = "administrador/unidades";
 public final static String ADMIN_RANKING = "administrador/ranking";
 public final static String ADMIN_MAYORCANON = "administrador/mayorcanon";
 
-//EMPLEADO
-
-public final static String EMPLEADO_PANEL= "empleado/panel";
-public final static String EMPLEADO_INFO = "empleado/informacion";
-public final static String EMPLEADO_ACTUAL = "empleado/actualidad";
-public static final String EMPLEADO_SUELDOS = "empleado/sueldos";
 /**** Redirects ****/
 public final static String HOME_ROOT = "/";
 public final static String RESPONSABLE = "redirect:/responsable";

@@ -23,15 +23,19 @@ import java.util.Optional;
 public class EmpleadoService implements IEmpleadoService {
 
     private final IPersonalRepository personalRepository;
+    private final PersonalService personalService;
     private final ILiquidacionHaberesService liquidacionService;
+    private final CierreCajaService cierreCajaService;                      
     private final ReciboSueldoPdf reciboPdf;
     private final ModelMapper modelMapper;
 
-    public EmpleadoService(IPersonalRepository personalRepository,
-                           ILiquidacionHaberesService liquidacionHaberesService, ReciboSueldoPdf reciboPdf,
+    public EmpleadoService(IPersonalRepository personalRepository, PersonalService personalService,
+                           ILiquidacionHaberesService liquidacionHaberesService, ReciboSueldoPdf reciboPdf, CierreCajaService cierreCajaService,
                            ModelMapper modelMapper) {
         this.personalRepository = personalRepository;
+        this.personalService = personalService;
         this.liquidacionService = liquidacionHaberesService;
+        this.cierreCajaService = cierreCajaService;
         this.reciboPdf = reciboPdf;
         this.modelMapper = modelMapper;
     }
@@ -39,7 +43,7 @@ public class EmpleadoService implements IEmpleadoService {
     @Override
     @Transactional(readOnly = true)
     public List<UnidadVentaFestivalDTO> misFestivalesYUnidades(String username) {
-        Personal personal = buscarPersonalActivo(username);
+        Personal personal = personalService.buscarPersonalActivo(username);
 
         List<LiquidacionHaberes> liquidaciones =
                 liquidacionService.listarFinalizadosxPersonal(personal.getIdPersonal());
@@ -55,31 +59,20 @@ public class EmpleadoService implements IEmpleadoService {
     @Override
     @Transactional(readOnly = true)
     public boolean esCajero(String username) {
-        Personal personal = buscarPersonalActivo(username);
+        Personal personal = personalService.buscarPersonalActivo(username);
         return "CAJERO".equalsIgnoreCase(personal.getTipoPersonal());
     }
 
     @Override
     @Transactional(readOnly = true)
     public UnidadVentaFestivalDTO miTrabajoActual(String username) {
-        Personal personal = buscarPersonalActivo(username);
+        Personal personal = personalService.buscarPersonalActivo(username);
         UnidadDeVenta unidad = personal.getUnidadDeVenta();
 
         if (!tieneFestivalVigente(unidad)) {
             return null;
         }
         return toDTO(unidad);
-    }
-    private Personal buscarPersonalActivo(String username) {
-        Personal personal = personalRepository.findByUsuarioUsername(username)
-                .orElseThrow(() -> new IllegalStateException(
-                        "No hay personal asociado al usuario " + username));
-
-        if (!personal.isActivo()) {
-            throw new IllegalStateException(
-                    "El personal asociado al usuario " + username + " está dado de baja");
-        }
-        return personal;
     }
 
 
@@ -104,10 +97,9 @@ public class EmpleadoService implements IEmpleadoService {
     @Override
     @Transactional(readOnly = true)
     public boolean puedeRegistrarPedidos(String username) {
-        Personal personal = buscarPersonalActivo(username);
+        Personal personal = personalService.buscarPersonalActivo(username);
 
-        return personal instanceof Cajero
-                && tieneFestivalVigente(personal.getUnidadDeVenta());
+        return personal instanceof Cajero && tieneFestivalVigente(personal.getUnidadDeVenta()) && cajaAbierta(username);
     }
     @Override
     public List<LiquidacionHaberesDTO> miSueldo(String username) {
@@ -133,4 +125,7 @@ public class EmpleadoService implements IEmpleadoService {
                 && unidad.getFestival().estaEnCurso(LocalDate.now());
     }
 
+    private boolean cajaAbierta(String username){
+        return cierreCajaService.traerCierreDelDia(username) == null;
+    }
 }
