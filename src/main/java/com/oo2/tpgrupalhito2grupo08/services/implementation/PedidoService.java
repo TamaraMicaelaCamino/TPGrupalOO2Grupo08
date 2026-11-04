@@ -4,6 +4,7 @@ import com.oo2.tpgrupalhito2grupo08.dtos.AltaPedidoDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.PedidoDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.PlatoDTO;
 import com.oo2.tpgrupalhito2grupo08.entities.*;
+import com.oo2.tpgrupalhito2grupo08.repositories.ICierreCajaRepository;
 import com.oo2.tpgrupalhito2grupo08.repositories.IPedidoRepository;
 import com.oo2.tpgrupalhito2grupo08.repositories.IPersonalRepository;
 import com.oo2.tpgrupalhito2grupo08.repositories.IPlatoRepository;
@@ -25,15 +26,17 @@ public class PedidoService implements IPedidoService {
     private final IPedidoRepository pedidoRepository;
     private final ModelMapper modelMapper;
     private final IPersonalRepository personalRepository;
+    private final ICierreCajaRepository cierreCajaRepository;
     private final PlatoService platoService;
     public PedidoService(
             IPedidoRepository pedidoRepository,
             ModelMapper modelMapper,
-            IPersonalRepository personalRepository, PlatoService platoService) {
+            IPersonalRepository personalRepository, ICierreCajaRepository cierreCajaRepository, PlatoService platoService) {
 
         this.pedidoRepository = pedidoRepository;
         this.modelMapper = modelMapper;
         this.personalRepository = personalRepository;
+        this.cierreCajaRepository = cierreCajaRepository;
         this.platoService = platoService;
     }
 
@@ -64,8 +67,24 @@ public class PedidoService implements IPedidoService {
         return resultado;
     }
 
+
+    @Transactional
     @Override
-    public PedidoDTO traerPorIdYResponsable(Long idPedido, String username){
+    public List<PedidoDTO> pedidosPorUnidadYFecha(Long idUnidadDeVenta, LocalDate fechaOperativa) {
+        List<PedidoDTO> resultado = new ArrayList<>();
+
+        for (Pedido pedido :
+                pedidoRepository.pedidosPorUnidadYFecha(idUnidadDeVenta, fechaOperativa)) {
+
+            PedidoDTO dto = modelMapper.map(pedido, PedidoDTO.class);
+            dto.setTotal(pedido.calcularTotal());
+            resultado.add(dto);
+        }
+        return resultado;
+    }
+
+    @Override
+    public PedidoDTO traerPedidoPorIdYResponsable(Long idPedido, String username){
         Pedido pedido = pedidoRepository.findByIdPedidoAndUnidadDeVenta_Responsable_Username(idPedido, username)
                 .orElseThrow(
                         ()-> new IllegalArgumentException("Pedido no encontrado"));
@@ -74,9 +93,26 @@ public class PedidoService implements IPedidoService {
     }
 
     @Override
+    public PedidoDTO traerPedidoPorIdYCajero(Long idPedido, String username){
+    Pedido pedido = pedidoRepository.buscarPorCajeroYUnidad(idPedido, username)
+            .orElseThrow(
+                    ()-> new IllegalArgumentException("Pedido no encontrado"));
+    PedidoDTO dto = modelMapper.map(pedido, PedidoDTO.class);
+        return dto;
+}
+
+    @Override
     public Long altaPedido(AltaPedidoDTO altaPedidoDTO, String username)  {
         LocalDate fechaOperacion = LocalDate.now();
         UnidadDeVenta unidadDeVenta = obtenerUnidadDelCajero(username, fechaOperacion);
+        if (cierreCajaRepository.existeCierreDeCaja(
+                unidadDeVenta.getIdUnidadDeVenta(),
+                fechaOperacion)) {
+
+            throw new IllegalArgumentException(
+                    "La caja de esta unidad ya está cerrada"
+            );
+        }
         if (altaPedidoDTO.getDetalles() == null
                 || altaPedidoDTO.getDetalles().isEmpty()) {
             throw new IllegalArgumentException(

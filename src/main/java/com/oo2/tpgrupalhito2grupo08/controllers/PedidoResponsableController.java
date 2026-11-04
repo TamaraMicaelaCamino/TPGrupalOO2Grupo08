@@ -33,7 +33,7 @@ public class PedidoResponsableController {
         mAV.addObject("idUnidadDeVenta", idUnidadDeVenta);
         mAV.addObject("idPedido", idPedido);
         if (idPedido != null) {
-            mAV.addObject("pedidoSeleccionado", pedidoService.traerPorIdYResponsable(idPedido, principal.getName()));
+            mAV.addObject("pedidoSeleccionado", pedidoService.traerPedidoPorIdYResponsable(idPedido, principal.getName()));
         }
         return mAV;
     }

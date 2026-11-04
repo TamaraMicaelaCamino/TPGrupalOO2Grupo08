@@ -2,11 +2,9 @@ package com.oo2.tpgrupalhito2grupo08.controllers;
 
 import com.oo2.tpgrupalhito2grupo08.dtos.AltaDetallePedidoDTO;
 import com.oo2.tpgrupalhito2grupo08.dtos.AltaPedidoDTO;
-import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
+import com.oo2.tpgrupalhito2grupo08.entities.*;
 import com.oo2.tpgrupalhito2grupo08.helpers.ViewRouteHelper;
-import com.oo2.tpgrupalhito2grupo08.services.implementation.EmpleadoService;
-import com.oo2.tpgrupalhito2grupo08.services.implementation.PedidoService;
-import com.oo2.tpgrupalhito2grupo08.services.implementation.PlatoService;
+import com.oo2.tpgrupalhito2grupo08.services.implementation.*;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 @PreAuthorize("hasRole('EMPLEADO')")
 @Controller
@@ -23,20 +22,18 @@ import java.security.Principal;
 public class PedidoCajeroController {
 
     private final PedidoService pedidoService;
-    private final EmpleadoService empleadoService;
-    public PedidoCajeroController(PedidoService pedidoService, EmpleadoService empleadoService) {
+    private final UnidadDeVentaService unidadDeVentaService;
+    private final UsuarioService usuarioService;
+    private final PersonalService personalService;
+    private final CierreCajaService cierreCajaService;
+    public PedidoCajeroController(PedidoService pedidoService, UnidadDeVentaService unidadDeVentaService, UsuarioService usuarioService, PersonalService personalService, EmpleadoService empleadoService, PersonalService personalService1, CierreCajaService cierreCajaService) {
         this.pedidoService = pedidoService;
-        this.empleadoService = empleadoService;
+        this.unidadDeVentaService = unidadDeVentaService;
+        this.usuarioService = usuarioService;
+        this.personalService = personalService1;
+        this.cierreCajaService = cierreCajaService;
     }
-/*
-    @GetMapping
-    public ModelAndView panel(Principal principal) {
-        ModelAndView mAV = new ModelAndView(ViewRouteHelper.EMPLEADO_PANEL);
-        mAV.addObject("esCajero", empleadoService.esCajero(principal.getName()));
-        mAV.addObject("tipoPersonal", empleadoService.obtenerTipoPersonal(principal.getName()));
-        return mAV;
-    }
-*/
+
     @GetMapping("/nuevoPedido")
     public ModelAndView formPedido(Principal principal){
         ModelAndView mAV = new ModelAndView(ViewRouteHelper.EMPLEADO_FORM_PEDIDO);
@@ -119,5 +116,52 @@ public class PedidoCajeroController {
         mAV.addObject("pedido", altaPedidoDTO);
         mAV.addObject("platos", pedidoService.traerPlatosDelCajero(principal.getName()));
         return mAV;
+    }
+
+    @GetMapping("/caja")
+    public ModelAndView cierreCaja(
+            @RequestParam(required = false) Long idPedido,
+            Principal principal) {
+
+        Personal personal = personalService.buscarCajeroActivo(principal.getName());
+
+        ModelAndView mAV =
+                new ModelAndView(ViewRouteHelper.EMPLEADO_CAJA);
+
+        mAV.addObject("pedidos",
+                pedidoService.pedidosPorUnidadYFecha(personal.getUnidadDeVenta().getIdUnidadDeVenta(), LocalDate.now())
+        );
+
+        mAV.addObject("idPedido", idPedido);
+
+        if (idPedido != null) {
+            mAV.addObject(
+                    "pedidoSeleccionado",
+                    pedidoService.traerPedidoPorIdYCajero(idPedido, principal.getName())
+            );
+        }
+        mAV.addObject("cierre", cierreCajaService.traerCierreDelDia(principal.getName()));
+        return mAV;
+    }
+
+    @PostMapping("/caja")
+    public ModelAndView realizarCierreCaja(
+            RedirectAttributes redirectAttributes,
+            Principal principal) {
+
+        try {
+            CierreCaja cierre =
+                    cierreCajaService.altaCierreCaja(principal.getName());
+
+            redirectAttributes.addFlashAttribute(
+                    "mensaje",
+                    "Cierre de caja " + cierre.getIdCierreCaja()
+                            + " registrado correctamente"
+            );
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return new ModelAndView("redirect:/empleado/caja");
     }
 }

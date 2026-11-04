@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<main class="container mt-3">
+
+    <div class="page-banner">
+        <h1>Caja</h1>
+        <p>Revisa los pedidos del la unidad o efectue el cierre del día</p>
+    </div>
+
+    <div class="alert alert-success" role="alert" th:if="${mensaje}" th:text="${mensaje}"></div>
+
+    <div class="alert alert-danger"
+         role="alert"
+         th:if="${error != null}"
+         th:text="${error}">
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-dark text-white" th:href="@{/empleado}">Volver al panel</a>
+    </div>
+
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(pedidos)}">
+        Todavía no hay pedidos cargados.
+    </div>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-striped table-hover">
+
+            <thead>
+            <tr>
+                <th>Número de pedido</th>
+                <th>Fecha de transacción</th>
+                <th>Total</th>
+                <th>Unidad de venta</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="p : ${pedidos}"
+                th:classappend="${p.idPedido == idPedido} ? 'table-active' : ''">
+
+                <td>
+                    <a class="font-weight-bold"
+                       th:href="@{/empleado/caja(idPedido=${p.idPedido})}"
+                       th:text="|Ver pedido ${p.idPedido}|">
+                    </a>
+                </td>
+
+                <td th:text="${#temporals.format(
+                    p.fechaTransaccion, 'dd/MM/yyyy'
+                )}"></td>
+
+                <td th:text="${#numbers.formatDecimal(
+                    p.total, 1, 'POINT', 2, 'COMMA'
+                )}"></td>
+
+                <td th:text="${p.nombreUnidad}"></td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(pedidos)}">
+                <td colspan="4" class="text-center text-muted">
+                    No hay pedidos cargados
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <section id="detalle"
+             class="mb-4"
+             th:if="${pedidoSeleccionado != null}">
+
+        <h3 th:text="|Detalle del pedido ${pedidoSeleccionado.idPedido}|"></h3>
+
+        <p th:text="|Unidad: ${pedidoSeleccionado.nombreUnidad}|"></p>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+
+                <thead>
+                <tr>
+                    <th>Nombre del Plato</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="d : ${pedidoSeleccionado.detalles}">
+                    <td th:text="${d.nombrePlato}"></td>
+                    <td th:text="${d.cantidad}"></td>
+
+                    <td th:text="${#numbers.formatDecimal(
+                        d.precioVenta, 1, 'POINT', 2, 'COMMA'
+                    )}"></td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <a class="btn btn-outline-dark"
+           th:href="@{/empleado/caja}">
+            Cerrar detalle
+        </a>
+    </section>
+    <div class="d-flex justify-content-end border-top pt-3 mb-4">
+        <form th:action="@{/empleado/caja}" method="post">
+            <button type="submit"
+                    class="btn btn-dark"
+                    th:disabled="${cierre != null}"
+                    th:text="${cierre != null ? 'Caja cerrada' : 'Cerrar caja'}">
+                Cerrar caja
+            </button>
+        </form>
+    </div>
+
+    <section th:if="${cierre != null}" class="mb-4">
+
+        <div class="alert alert-success" role="status">
+            El cierre del día está registrado.
+            Podés seguir consultando los pedidos y sus detalles.
+        </div>
+
+        <h3>Resumen del cierre</h3>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Día del cierre</th>
+                    <th scope="col">Fecha y hora del cierre</th>
+                    <th scope="col">Cajero</th>
+                    <th scope="col">Cantidad de pedidos</th>
+                    <th scope="col">Total recaudado</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td th:text="${#temporals.format(
+                    cierre.fechaOperativa, 'dd/MM/yyyy'
+                )}"></td>
+
+                    <td th:text="${#temporals.format(
+                    cierre.fechaHoraCierre, 'dd/MM/yyyy HH:mm'
+                )}"></td>
+
+                    <td th:text="${cierre.nombreCajero}"></td>
+
+                    <td th:text="${cierre.cantPedidos}"></td>
+
+                    <td class="font-weight-bold"
+                        th:text="${#numbers.formatDecimal(
+                        cierre.totalRecaudado, 1, 'POINT', 2, 'COMMA'
+                    )}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>
+
+

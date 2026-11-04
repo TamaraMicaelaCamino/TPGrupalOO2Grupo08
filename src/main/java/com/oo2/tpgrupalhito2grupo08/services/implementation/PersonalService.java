@@ -10,7 +10,8 @@ import com.oo2.tpgrupalhito2grupo08.events.AltaEmpleadoEvent;
 import com.oo2.tpgrupalhito2grupo08.repositories.IPersonalRepository;
 import com.oo2.tpgrupalhito2grupo08.services.IPersonalService;
 import com.oo2.tpgrupalhito2grupo08.components.GeneradorPassword;
-import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.transaction.annotation.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,39 @@ public class PersonalService implements IPersonalService {
         this.generadorPassword=generadorPassword;
         this.modelMapper=modelMapper;
         this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Personal buscarPersonalActivo(String username) {
+        Personal personal = personalRepository.findByUsuarioUsername(username)
+                .orElseThrow(() -> new IllegalStateException(
+                        "No hay personal asociado al usuario " + username));
+
+        if (!personal.isActivo()) {
+            throw new IllegalStateException(
+                    "El personal asociado al usuario " + username + " está dado de baja");
+        }
+        return personal;
+    }
+
+    @Override
+    public Cajero buscarCajeroActivo(String username) {
+        Personal personal = personalRepository.findByUsuarioUsername(username)
+                .orElseThrow(() -> new AccessDeniedException(
+                        "No hay personal asociado al usuario " + username));
+
+        if (!personal.isActivo()) {
+            throw new AccessDeniedException(
+                    "El personal asociado al usuario " + username + " está dado de baja");
+        }
+
+        if(!(personal instanceof  Cajero cajero)){
+            throw new AccessDeniedException(
+                    "El personal asociado al usuario " + username + " no es un cajero");
+        }
+
+        return cajero;
     }
 
     @Override
