@@ -105,6 +105,23 @@ http://localhost:8080
 - **Generar PDF recibo de sueldo** — Tamara Camino  
   [PR #30](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/30)
   
+- **Alta de empleados con envío de credenciales por correo** — Lautaro Leiva Szapajko  
+  [PR #17](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/17) · [PR #20](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/20)
 
+- **Consultar empleados por unidad de venta del responsable** — Lautaro Leiva Szapajko  
+  [PR #17](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/17) · [PR #20](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/20)
 
+- **Consultar platos por unidad de venta del responsable** — Lautaro Leiva Szapajko  
+  [PR #22](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/22)
 
+- **Registrar pedidos como cajero** — Lautaro Leiva Szapajko  
+  [PR #25](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/25)
+
+- **Consultar pedidos y sus detalles como responsable** — Lautaro Leiva Szapajko  
+  [PR #25](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/25)
+
+- **Cerrar caja y consultar el resumen diario de la unidad de venta** — Lautaro Leiva Szapajko  
+  [PR #32](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/32)
+
+- **Alta de unidad de venta por Responsable ya registrado** — Lautaro Leiva Szapajko  
+  [PR #33](https://github.com/TamaraMicaelaCamino/TPGrupalOO2Grupo08/pull/33)
