@@ -66,7 +66,13 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
         return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
     }
 
-
+    @Override
+    @Transactional(readOnly = true)
+    public Usuario buscarPorUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Usuario no encontrado"));
+    }
 
 }
 

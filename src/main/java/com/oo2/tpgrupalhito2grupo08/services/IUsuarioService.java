@@ -8,5 +8,5 @@ public interface IUsuarioService {
 
     Usuario crearUsuario(UsuarioDTO dto, RolEnum rol);
 
-
+    Usuario buscarPorUsername(String username);
 }

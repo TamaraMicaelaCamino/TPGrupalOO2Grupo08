@@ -3,9 +3,6 @@ package com.oo2.tpgrupalhito2grupo08.services;
 import com.oo2.tpgrupalhito2grupo08.dtos.*;
 import com.oo2.tpgrupalhito2grupo08.entities.Festival;
 import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 
 public interface IUnidadDeVentaService {
@@ -13,6 +10,10 @@ public interface IUnidadDeVentaService {
     void registrarFoodTruck(FoodTruckDTO dto);
 
     void registrarPuestoDesarmable(PuestoDesarmableDTO dto);
+
+    void registrarFoodTruckResponsable(FoodTruckResponsableDTO dto, String username);
+
+    void registrarPuestoDesarmableResponsable(PuestoDesarmableResponsableDTO dto, String username);
 
     List<UnidadDeVenta> listarUnidadesResponsable(String username);
 
