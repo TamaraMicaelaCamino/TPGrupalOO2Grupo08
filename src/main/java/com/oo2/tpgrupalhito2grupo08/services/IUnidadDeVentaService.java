@@ -3,6 +3,8 @@ package com.oo2.tpgrupalhito2grupo08.services;
 import com.oo2.tpgrupalhito2grupo08.dtos.*;
 import com.oo2.tpgrupalhito2grupo08.entities.Festival;
 import com.oo2.tpgrupalhito2grupo08.entities.UnidadDeVenta;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IUnidadDeVentaService {
@@ -16,6 +18,8 @@ public interface IUnidadDeVentaService {
     void registrarPuestoDesarmableResponsable(PuestoDesarmableResponsableDTO dto, String username);
 
     List<UnidadDeVenta> listarUnidadesResponsable(String username);
+
+    List<UnidadDeVenta> listarUnidadesResponsableFestivalActivo(String username, LocalDate fechaHoy);
 
     UnidadDeVenta buscarUnidadDelResponsable(Long idUnidadDeVenta, String username);
 

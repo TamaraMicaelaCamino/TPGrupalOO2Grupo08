@@ -14,6 +14,7 @@ import com.oo2.tpgrupalhito2grupo08.services.IUnidadDeVentaService;
 import com.oo2.tpgrupalhito2grupo08.services.IUsuarioService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service("unidadDeVentaService")
@@ -97,6 +98,11 @@ public class UnidadDeVentaService implements IUnidadDeVentaService {
     @Override
     public List<UnidadDeVenta> listarUnidadesResponsable(String username) {
         return unidadRepository.findByResponsable_Username(username);
+    }
+
+    @Override
+    public List<UnidadDeVenta> listarUnidadesResponsableFestivalActivo(String username, LocalDate fechaHoy) {
+        return unidadRepository.findbyResponsableYFestivalActivo(username, fechaHoy);
     }
 
     @Override
