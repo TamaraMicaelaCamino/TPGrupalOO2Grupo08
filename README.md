@@ -5,7 +5,7 @@
 
 ## Integrantes
 - **Lautaro Leiva Szapajko - szapajko**
-- **Tamara Micaela Camino - TamaraCamino**
+- **Tamara Camino - TamaraMicaelaCamino**
 
 
 ## Pasos para correr la aplicación(crear bd, variables de entorno, etc). 
