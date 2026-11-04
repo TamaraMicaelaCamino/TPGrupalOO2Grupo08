@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 @PreAuthorize("hasRole('RESPONSABLE')")
 @Controller
@@ -48,7 +49,7 @@ public class PersonalController {
         mAV.addObject("empleado", new CajeroDTO());
         mAV.addObject("tipo", "cajero");
         mAV.addObject("turnos", TurnoEnum.values());
-        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsableFestivalActivo(principal.getName(), LocalDate.now()));
         return mAV;
     }
 
@@ -60,7 +61,7 @@ public class PersonalController {
         mAV.addObject("empleado", new PersonalCocinaDTO());
         mAV.addObject("tipo", "cocina");
         mAV.addObject("categorias", Categoria.values());
-        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsableFestivalActivo(principal.getName(), LocalDate.now()));
         return mAV;
     }
 
@@ -82,7 +83,7 @@ public class PersonalController {
         mAV.addObject("empleado", dto);
         mAV.addObject("tipo", "cajero");
         mAV.addObject("turnos", TurnoEnum.values());
-        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsableFestivalActivo(principal.getName(), LocalDate.now()));
         return mAV;
     }
 
@@ -104,7 +105,7 @@ public class PersonalController {
         mAV.addObject("empleado", dto);
         mAV.addObject("tipo", "cocina");
         mAV.addObject("categorias", Categoria.values());
-        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsable(principal.getName()));
+        mAV.addObject("unidades", unidadDeVentaService.listarUnidadesResponsableFestivalActivo(principal.getName(), LocalDate.now()));
         return mAV;
     }
 }

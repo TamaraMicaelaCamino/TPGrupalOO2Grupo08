@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,15 @@ public interface IUnidadDeVentaRepository extends JpaRepository<UnidadDeVenta, L
     boolean existsFoodTruckByPatente(@Param("patente") String patente);
 
     List<UnidadDeVenta> findByResponsable_Username(String username);
+
+    @Query("""
+    SELECT u
+    FROM UnidadDeVenta u
+    WHERE u.responsable.username = :username
+      AND u.festival.fechaInicio <= :fechaHoy
+      AND u.festival.fechaFin >= :fechaHoy
+    """)
+    List<UnidadDeVenta> findbyResponsableYFestivalActivo(@Param("username") String username, @Param("fechaHoy") LocalDate fechaHoy);
 
     Optional<UnidadDeVenta> findByIdUnidadDeVentaAndResponsable_Username(Long idUnidadDeVenta, String username);
 
